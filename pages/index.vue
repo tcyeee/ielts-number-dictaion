@@ -57,7 +57,7 @@
 
     <!-- Training Modules Section -->
     <view class="section">
-      <text class="section-title">Training Modules</text>
+      <text class="section-title" @click="toCategory">Training Modules</text>
       <view class="modules-grid">
         <view class="card module-card" v-for="(item, index) in modules" :key="index">
           <view class="module-icon-box">
@@ -141,7 +141,13 @@ export default {
     };
   },
   onLoad() {},
-  methods: {},
+  methods: {
+    toCategory() {
+      uni.navigateTo({
+        url: "/pages/category",
+      });
+    },
+  },
 };
 </script>
 
