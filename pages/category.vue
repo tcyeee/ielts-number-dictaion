@@ -1,0 +1,5 @@
+<template>
+  <view>
+    <view>分类</view>
+  </view>
+</template>
