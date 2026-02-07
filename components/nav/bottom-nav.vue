@@ -57,7 +57,8 @@ export default {
   left: 40rpx;
   right: 40rpx;
   height: 120rpx;
-  background-color: $card-bg;
+  background-color: #232e42;
+  border: 5rpx solid rgba(255, 255, 255, 0.1);
   border-radius: 60rpx;
   display: flex;
   justify-content: space-around;

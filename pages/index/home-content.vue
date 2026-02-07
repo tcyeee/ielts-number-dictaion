@@ -40,7 +40,7 @@
         <view class="card mixed-card" @click="toCategory">
           <view class="mixed-header">
             <view class="module-icon-box mixed-icon-box">
-              <text class="module-icon">{{mixedMode.icon}}</text>
+              <text class="module-icon icon--streamline-plump--street-sign-remix" />
             </view>
             <view class="mixed-info">
               <view class="mixed-title-row">
@@ -65,9 +65,9 @@
         </view>
 
         <!-- Other Modules -->
-        <view class="card module-list-item" v-for="(item, index) in modules" :key="index">
+        <view class="card module-list-item" v-for="(item, index) in modules" :key="index" hover-class="card-hover">
           <view class="module-icon-box list-icon-box">
-            <text class="module-icon">{{item.icon}}</text>
+            <view :class="['module-icon', item.icon]" style="color: #fff;"></view>
           </view>
           <view class="module-content">
             <view class="module-header">
@@ -120,25 +120,25 @@ export default {
         {
           title: "Phone Numbers",
           sub: "Master digit groups",
-          icon: "📱",
+          icon: "icon--f7--phone-fill",
           progress: 70,
         },
         {
           title: "Dates & Times",
           sub: "Months & years",
-          icon: "📅",
+          icon: "icon--fluent--calendar-date-28-filled",
           progress: 45,
         },
         {
           title: "Prices",
           sub: "Currencies & decimals",
-          icon: "💵",
+          icon: "icon--bxs--dollar-circle",
           progress: 80,
         },
         {
           title: "Addresses",
           sub: "Postal codes & streets",
-          icon: "🗺️",
+          icon: "icon--mynaui--map-pinned-solid",
           progress: 30,
         },
       ],
@@ -416,7 +416,7 @@ export default {
 }
 
 .module-icon {
-  font-size: 44rpx;
+  color: #bda4fd;
 }
 
 .progress-bar-bg {
