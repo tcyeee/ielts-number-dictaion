@@ -11,12 +11,7 @@
         </view>
       </view>
       <view class="notification-btn">
-        <!-- Bell Icon SVG -->
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12.02 2.90991C8.70997 2.90991 6.01997 5.59991 6.01997 8.90991V11.7999C6.01997 12.4099 5.75997 13.3399 5.44997 13.8599L4.29997 15.7699C3.58997 16.9599 4.07997 18.2599 5.37997 18.2599H18.66C19.96 18.2599 20.45 16.9599 19.74 15.7699L18.59 13.8599C18.28 13.3399 18.02 12.4099 18.02 11.7999V8.90991C18.02 5.60991 15.32 2.90991 12.02 2.90991Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" />
-          <path d="M13.87 3.20001C13.56 3.11001 13.24 3.04001 12.91 3.01001C12.62 2.98001 12.32 2.98001 12.02 3.00001C9.64003 3.14001 7.59003 4.90001 7.23003 7.28001" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M15.02 19.06C15.02 20.71 13.67 22.06 12.02 22.06C11.2 22.06 10.44 21.72 9.90002 21.18C9.36002 20.64 9.02002 19.88 9.02002 19.06" stroke="white" stroke-width="1.5" stroke-miterlimit="10" />
-        </svg>
+        <text class="icon icon--fontisto--bell icon-size-24"></text>
       </view>
     </view>
 
