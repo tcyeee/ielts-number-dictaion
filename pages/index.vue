@@ -93,13 +93,12 @@
 
       <!-- Safe Area Bottom -->
       <safe-area-bottom />
-
     </view>
   </view>
 </template>
 
 <script>
-import SafeArea from "@/components/safe-area/safe-area.vue";
+import SafeArea from "@/components/safe-area/safe-area-top.vue";
 import BottomNav from "@/components/bottom-nav/bottom-nav.vue";
 import SafeAreaBottom from "@/components/safe-area/safe-area-bottom.vue";
 

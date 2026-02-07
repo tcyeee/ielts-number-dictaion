@@ -7,9 +7,6 @@
       <text class="nav-icon">📊</text>
     </view>
     <view class="nav-item">
-      <text class="nav-icon">⚙️</text>
-    </view>
-    <view class="nav-item">
       <text class="nav-icon">👤</text>
     </view>
   </view>
