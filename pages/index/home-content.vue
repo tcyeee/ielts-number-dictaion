@@ -35,31 +35,50 @@
     <!-- Training Modules Section -->
     <view class="section">
       <text class="section-title" @click="toCategory">Training Modules</text>
-      <view class="modules-grid">
-        <view class="card module-card" v-for="(item, index) in modules" :key="index">
-          <view class="module-icon-box">
-            <!-- Dynamic Icon Rendering based on type -->
-            <text class="module-icon">{{item.icon}}</text>
+      <view class="modules-list">
+        <!-- Mixed Mode Card -->
+        <view class="card mixed-card" @click="toCategory">
+          <view class="mixed-header">
+            <view class="module-icon-box mixed-icon-box">
+              <text class="module-icon">{{mixedMode.icon}}</text>
+            </view>
+            <view class="mixed-info">
+              <view class="mixed-title-row">
+                <text class="mixed-title">{{mixedMode.title}}</text>
+                <view class="mixed-tag">
+                  <text class="mixed-tag-text">{{mixedMode.tag}}</text>
+                </view>
+              </view>
+              <text class="mixed-sub">{{mixedMode.sub}}</text>
+            </view>
           </view>
-          <text class="module-title">{{item.title}}</text>
-          <text class="module-sub">{{item.sub}}</text>
-          <view class="progress-bar-bg">
-            <view class="progress-bar-fill" :style="{width: item.progress + '%'}"></view>
+
+          <view class="mixed-progress-section">
+            <view class="progress-labels">
+              <text class="progress-label">Overall Mastery</text>
+              <text class="progress-value">{{mixedMode.progress}}%</text>
+            </view>
+            <view class="progress-bar-bg mixed-bar-bg">
+              <view class="progress-bar-fill mixed-bar-fill" :style="{width: mixedMode.progress + '%'}"></view>
+            </view>
           </view>
         </view>
-      </view>
-    </view>
 
-    <!-- Weekly Streak Section -->
-    <view class="streak-card">
-      <view class="streak-info">
-        <text class="streak-label">WEEKLY STREAK</text>
-        <text class="streak-days">5 Days</text>
-      </view>
-      <view class="streak-indicators">
-        <view class="streak-circle checked">✓</view>
-        <view class="streak-circle checked">✓</view>
-        <view class="streak-circle locked">🔒</view>
+        <!-- Other Modules -->
+        <view class="card module-list-item" v-for="(item, index) in modules" :key="index">
+          <view class="module-icon-box list-icon-box">
+            <text class="module-icon">{{item.icon}}</text>
+          </view>
+          <view class="module-content">
+            <view class="module-header">
+              <text class="module-title">{{item.title}}</text>
+              <text class="module-percent">{{item.progress}}%</text>
+            </view>
+            <view class="progress-bar-bg">
+              <view class="progress-bar-fill" :style="{width: item.progress + '%'}"></view>
+            </view>
+          </view>
+        </view>
       </view>
     </view>
 
@@ -90,6 +109,13 @@ export default {
   },
   data() {
     return {
+      mixedMode: {
+        title: "Mixed Mode",
+        tag: "ALL CATEGORIES",
+        sub: "Phones, Dates, Prices & Addresses",
+        progress: 62,
+        icon: "🔀",
+      },
       modules: [
         {
           title: "Phone Numbers",
@@ -240,54 +266,164 @@ export default {
 .success {
   color: $accent-green;
 }
-/* Modules Grid */
-.modules-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+/* Modules List */
+.modules-list {
+  display: flex;
+  flex-direction: column;
   gap: 30rpx;
 }
 
-.module-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 30rpx;
+/* Mixed Mode Card */
+.mixed-card {
+  background: linear-gradient(145deg, #2b1f3d 0%, #1e1e2e 100%);
+  border: 2rpx solid #4a3b69;
+  padding: 36rpx;
+  position: relative;
+  overflow: hidden;
 }
 
-.module-icon-box {
-  width: 80rpx;
-  height: 80rpx;
-  background-color: rgba($accent-blue, 0.1);
-  border-radius: 20rpx;
+.mixed-header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40rpx;
+}
+
+.mixed-icon-box {
+  width: 100rpx;
+  height: 100rpx;
+  background: linear-gradient(135deg, #8a4fff 0%, #5e35b1 100%);
+  border-radius: 24rpx;
+  margin-right: 30rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24rpx;
+  flex-shrink: 0;
+  box-shadow: 0 4rpx 12rpx rgba(138, 79, 255, 0.3);
 }
 
-.module-icon {
-  font-size: 40rpx;
+.mixed-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100rpx;
+}
+
+.mixed-title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.mixed-title {
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.mixed-tag {
+  background-color: rgba(138, 79, 255, 0.2);
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid rgba(138, 79, 255, 0.4);
+}
+
+.mixed-tag-text {
+  color: #a77dff;
+  font-size: 20rpx;
+  font-weight: bold;
+  letter-spacing: 1rpx;
+}
+
+.mixed-sub {
+  color: #9ca3af;
+  font-size: 26rpx;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.progress-label {
+  color: #9ca3af;
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.progress-value {
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+.mixed-bar-bg {
+  height: 16rpx;
+  background-color: #2e2440;
+  border-radius: 8rpx;
+}
+
+.mixed-bar-fill {
+  background: linear-gradient(90deg, #8a4fff 0%, #d500f9 100%);
+  border-radius: 8rpx;
+  height: 100%;
+}
+
+/* List Items */
+.module-list-item {
+  display: flex;
+  align-items: center;
+  padding: 36rpx;
+  border: 1rpx solid #253145;
+}
+
+.list-icon-box {
+  width: 90rpx;
+  height: 90rpx;
+  background-color: #1a2332;
+  border-radius: 24rpx;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1rpx solid #253145;
+}
+
+.module-content {
+  flex: 1;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+  align-items: center;
 }
 
 .module-title {
   color: $text-main;
-  font-size: 30rpx;
+  font-size: 32rpx;
   font-weight: bold;
-  margin-bottom: 8rpx;
 }
 
-.module-sub {
-  color: $text-sub;
-  font-size: 22rpx;
-  margin-bottom: 30rpx;
-  line-height: 1.4;
+.module-percent {
+  color: $text-main;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.module-icon {
+  font-size: 44rpx;
 }
 
 .progress-bar-bg {
   width: 100%;
-  height: 8rpx;
+  height: 12rpx;
   background-color: #253145;
-  border-radius: 4rpx;
+  border-radius: 6rpx;
   overflow: hidden;
 }
 
