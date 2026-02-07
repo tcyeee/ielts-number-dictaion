@@ -1,10 +1,10 @@
 {
 	"pages": [
-		{"path": "pages/index","style": { "navigationStyle": "custom" }},
-		{"path": "pages/category","style": { "navigationStyle": "custom" }},
-		{"path": "pages/dictation","style": { "navigationStyle": "custom" }},
-		{"path": "pages/history","style": { "navigationStyle": "custom" }},
-		{"path": "pages/result","style": { "navigationStyle": "custom" }}
+		{"path": "pages/index","style": { "navigationStyle": "custom", "navigationBarTitleText": "首页" }},
+		{"path": "pages/category","style": { "navigationStyle": "custom", "navigationBarTitleText": "分类" }},
+		{"path": "pages/dictation","style": { "navigationStyle": "custom", "navigationBarTitleText": "听写" }},
+		{"path": "pages/history","style": { "navigationStyle": "custom", "navigationBarTitleText": "历史" }},
+		{"path": "pages/result","style": { "navigationStyle": "custom", "navigationBarTitleText": "结果" }}
 	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F8F8F8",
