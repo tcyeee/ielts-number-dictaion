@@ -1,6 +1,6 @@
 <template>
   <view class="page-wrapper">
-    <safe-area size="s" />
+    <safe-area size="m" />
     <view class="container">
       <!-- Header Section -->
       <view class="header">

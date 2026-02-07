@@ -6,34 +6,34 @@
 
 <script>
 export default {
-  name: 'safe-area',
+  name: "safe-area",
   props: {
     size: {
       type: String,
-      default: 's' // s, m, l
-    }
+      default: "s", // s, m, l
+    },
   },
   data() {
     return {
       statusBarHeight: 0,
-      navBarHeight: 0
-    }
+      navBarHeight: 0,
+    };
   },
   computed: {
     heightStyle() {
       let h = 0;
-      if (this.size === 's') {
+      if (this.size === "s") {
         h = this.statusBarHeight;
         return `${h}px`;
-      } else if (this.size === 'm') {
+      } else if (this.size === "m") {
         h = this.statusBarHeight + this.navBarHeight;
         return `${h}px`;
-      } else if (this.size === 'l') {
+      } else if (this.size === "l") {
         h = this.statusBarHeight + this.navBarHeight;
         return `calc(${h}px + 5vh)`;
       }
-      return '0px';
-    }
+      return "0px";
+    },
   },
   mounted() {
     this.initDimensions();
@@ -42,27 +42,27 @@ export default {
     initDimensions() {
       const sys = uni.getSystemInfoSync();
       this.statusBarHeight = sys.statusBarHeight || 20;
-      
+
       let navHeight = 44; // Default fallback
-      
+
       // #ifdef MP-WEIXIN
       try {
         const menuButtonInfo = uni.getMenuButtonBoundingClientRect();
         if (menuButtonInfo) {
           const gap = menuButtonInfo.top - this.statusBarHeight;
           // Ensure gap is reasonable
-          const safeGap = gap > 0 ? gap : 4; 
-          navHeight = (safeGap * 2) + menuButtonInfo.height;
+          const safeGap = gap > 0 ? gap : 4;
+          navHeight = safeGap * 2 + menuButtonInfo.height;
         }
       } catch (e) {
-        console.error('getMenuButtonBoundingClientRect failed', e);
+        console.error("getMenuButtonBoundingClientRect failed", e);
       }
       // #endif
-      
+
       this.navBarHeight = navHeight;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
