@@ -1,11 +1,9 @@
 <template>
+  <custom-header title="Training History" />
   <view class="page-root">
-    <custom-header title="Training History" />
-
     <scroll-view scroll-y class="scroll-content">
+      <SafeAreaTop size="m" />
       <view class="content-wrapper">
-        <view class="header-spacer"></view>
-
         <!-- Stats Cards -->
         <view class="stats-row">
           <view class="card stat-card">
@@ -95,13 +93,15 @@
 </template>
 
 <script>
-import CustomHeader from "@/components/custom-header/custom-header.vue";
+import CustomHeader from "@/components/nav/custom-header.vue";
 import SafeAreaBottom from "@/components/safe-area/safe-area-bottom.vue";
+import SafeAreaTop from "@/components/safe-area/safe-area-top.vue";
 
 export default {
   components: {
     CustomHeader,
     SafeAreaBottom,
+    SafeAreaTop,
   },
   data() {
     return {
@@ -186,12 +186,7 @@ export default {
 }
 
 .content-wrapper {
-  padding: 0 40rpx;
-}
-
-.header-spacer {
-  height: calc(44px + var(--status-bar-height)); /* Adjust based on safe area */
-  margin-bottom: 20rpx;
+  padding: 25rpx 40rpx 20rpx 40rpx;
 }
 
 /* Stats Cards */

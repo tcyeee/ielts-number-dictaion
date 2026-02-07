@@ -25,7 +25,7 @@
 import HomeContent from "./home-content.vue";
 import HistoryContent from "./history-content.vue";
 import ProfileContent from "./profile-content.vue";
-import BottomNav from "@/components/bottom-nav/bottom-nav.vue";
+import BottomNav from "@/components/nav/bottom-nav.vue";
 
 export default {
   components: {
