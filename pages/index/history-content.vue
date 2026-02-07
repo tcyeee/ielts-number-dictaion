@@ -1,6 +1,6 @@
 <template>
+  <safe-area size="s" />
   <view class="container">
-    <safe-area size="s" />
 
     <!-- Header -->
     <view class="header">
@@ -167,7 +167,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  padding: 40rpx;
+  padding: 40rpx 40rpx calc(40rpx + 120rpx + 5vh) 40rpx;
 }
 
 /* Header */
