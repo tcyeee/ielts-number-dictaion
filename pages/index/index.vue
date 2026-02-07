@@ -1,14 +1,27 @@
 <template>
   <view class="page-root">
-    <view v-show="currentTab === 0">
-      <home-content />
-    </view>
-    <view v-show="currentTab === 1">
-      <history-content />
-    </view>
-    <view v-show="currentTab === 2">
-      <profile-content />
-    </view>
+    <swiper
+      class="tab-swiper"
+      :current="currentTab"
+      :duration="250"
+      @change="onSwiperChange"
+    >
+      <swiper-item>
+        <scroll-view scroll-y class="tab-scroll">
+          <home-content />
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view scroll-y class="tab-scroll">
+          <history-content />
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view scroll-y class="tab-scroll">
+          <profile-content />
+        </scroll-view>
+      </swiper-item>
+    </swiper>
     <bottom-nav :current="currentTab" @change="onTabChange" />
   </view>
 </template>
@@ -40,6 +53,9 @@ export default {
     }
   },
   methods: {
+    onSwiperChange(e) {
+      this.currentTab = e.detail.current;
+    },
     onTabChange(index) {
       this.currentTab = index;
     },
@@ -50,7 +66,13 @@ export default {
 <style lang="scss">
 page {
   background-color: $bg-color;
-  min-height: 100vh;
-  padding-bottom: 120rpx;
+}
+
+.tab-swiper {
+  height: 100vh;
+}
+
+.tab-scroll {
+  height: 100%;
 }
 </style>
