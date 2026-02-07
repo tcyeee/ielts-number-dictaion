@@ -27,30 +27,14 @@
         <view class="progress-cards">
           <!-- Accuracy Card -->
           <view class="card progress-card">
-            <view class="circular-chart" :style="{'--percentage': 85, '--color': '#2b86ff'}">
-              <view class="chart-content">
-                <text class="chart-value">85%</text>
-              </view>
-              <svg viewBox="0 0 36 36" class="circular-svg">
-                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                <path class="circle" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              </svg>
-            </view>
+            <circular-progress :percentage="85" color="#2b86ff" label="85%" />
             <text class="card-label">Accuracy</text>
             <text class="card-subtext success">+5% today</text>
           </view>
 
           <!-- Daily Goal Card -->
           <view class="card progress-card">
-            <view class="circular-chart orange" :style="{'--percentage': 60, '--color': '#ff6b35'}">
-              <view class="chart-content">
-                <text class="chart-value">12/20</text>
-              </view>
-              <svg viewBox="0 0 36 36" class="circular-svg">
-                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                <path class="circle" stroke-dasharray="60, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              </svg>
-            </view>
+            <circular-progress :percentage="60" color="#ff6b35" label="12/20" />
             <text class="card-label">Daily Goal</text>
             <text class="card-subtext">8 remaining</text>
           </view>
@@ -101,12 +85,14 @@
 import SafeArea from "@/components/safe-area/safe-area-top.vue";
 import BottomNav from "@/components/bottom-nav/bottom-nav.vue";
 import SafeAreaBottom from "@/components/safe-area/safe-area-bottom.vue";
+import CircularProgress from "@/components/circular-progress/circular-progress.vue";
 
 export default {
   components: {
     SafeArea,
     BottomNav,
     SafeAreaBottom,
+    CircularProgress,
   },
   data() {
     return {
@@ -241,54 +227,6 @@ page {
   align-items: center;
   padding: 40rpx 20rpx;
   box-sizing: border-box;
-}
-
-.circular-chart {
-  position: relative;
-  width: 160rpx;
-  height: 160rpx;
-  margin-bottom: 24rpx;
-}
-
-.circular-svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(0deg); /* Adjust starting point if needed */
-}
-
-.circle-bg {
-  fill: none;
-  stroke: #253145;
-  stroke-width: 2.8;
-}
-
-.circle {
-  fill: none;
-  stroke: $accent-blue;
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  /* Stroke dasharray calculated based on percentage */
-}
-
-.orange .circle {
-  stroke: $accent-orange;
-}
-
-.chart-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.chart-value {
-  color: $text-main;
-  font-size: 36rpx;
-  font-weight: bold;
 }
 
 .card-label {
