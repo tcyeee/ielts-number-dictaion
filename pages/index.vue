@@ -89,20 +89,7 @@
       </view>
 
       <!-- Bottom Navigation -->
-      <view class="bottom-nav">
-        <view class="nav-item active">
-          <text class="nav-icon">🏠</text>
-        </view>
-        <view class="nav-item">
-          <text class="nav-icon">📊</text>
-        </view>
-        <view class="nav-item">
-          <text class="nav-icon">⚙️</text>
-        </view>
-        <view class="nav-item">
-          <text class="nav-icon">👤</text>
-        </view>
-      </view>
+      <bottom-nav />
 
       <!-- Spacer for bottom nav -->
       <view class="bottom-spacer"></view>
@@ -113,10 +100,12 @@
 
 <script>
 import SafeArea from "@/components/safe-area/safe-area.vue";
+import BottomNav from "@/components/bottom-nav/bottom-nav.vue";
 
 export default {
   components: {
     SafeArea,
+    BottomNav,
   },
   data() {
     return {
@@ -160,14 +149,6 @@ export default {
 </script>
 
 <style lang="scss">
-$bg-color: #111823;
-$card-bg: #1a2332;
-$text-main: #ffffff;
-$text-sub: #8b9bb4;
-$accent-blue: #2b86ff;
-$accent-orange: #ff6b35;
-$accent-green: #00d26a;
-
 page {
   background-color: $bg-color;
   min-height: 100vh;
