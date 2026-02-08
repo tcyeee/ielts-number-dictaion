@@ -73,27 +73,35 @@
 
 <script>
 import CustomHeader from "@/components/nav/custom-header.vue";
+import { mapState, mapActions } from "pinia";
+import { useUserStore } from "@/stores/user";
 
 export default {
   components: {
     CustomHeader,
   },
-  data() {
-    return {
-      dailyReminder: true,
-      weeklyProgress: true,
-      newModules: true,
-      practiceTime: "20:00",
-    };
+  computed: {
+    ...mapState(useUserStore, ["settings"]),
+    dailyReminder() {
+      return this.settings.notification.dailyReminder;
+    },
+    weeklyProgress() {
+      return this.settings.notification.weeklyProgress;
+    },
+    newModules() {
+      return this.settings.notification.newModules;
+    },
+    practiceTime() {
+      return this.settings.notification.practiceTime;
+    },
   },
   methods: {
+    ...mapActions(useUserStore, ["updateNotificationSettings"]),
     onToggleChange(key, event) {
-      this[key] = event.detail.value;
-      // Here you would typically save the setting to storage or backend
+      this.updateNotificationSettings({ [key]: event.detail.value });
     },
     onTimeChange(e) {
-      this.practiceTime = e.detail.value;
-      // Save time setting
+      this.updateNotificationSettings({ practiceTime: e.detail.value });
     },
   },
 };

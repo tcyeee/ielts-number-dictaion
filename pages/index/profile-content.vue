@@ -129,33 +129,35 @@
 <script>
 import SafeAreaTop from "@/components/safe-area/safe-area-top.vue";
 import { navigateTo } from "@/utils/router";
+import { mapState, mapActions } from "pinia";
+import { useUserStore } from "@/stores/user";
 
 export default {
   components: {
     SafeAreaTop,
   },
-  data() {
-    return {
-      userInfo: {
-        name: "Alex",
-        level: 12,
-        streak: 5,
-        avatar:
-          "https://api.dicebear.com/9.x/avataaars/png?seed=Alex&backgroundColor=ffdfbf",
-      },
-      isDarkMode: true,
-      currentLanguage: "EN",
-      questionsPerSession: 10,
-    };
+  computed: {
+    ...mapState(useUserStore, ["userInfo", "settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
+    currentLanguage() {
+      return this.settings.currentLanguage;
+    },
+    questionsPerSession() {
+      return this.settings.questionsPerSession;
+    },
   },
   methods: {
+    ...mapActions(useUserStore, {
+      updateDarkMode: "toggleDarkMode",
+      updateLanguage: "setLanguage",
+    }),
     toggleDarkMode(e) {
-      this.isDarkMode = e.detail.value;
-      // Implement theme switching logic here
+      this.updateDarkMode(e.detail.value);
     },
     setLanguage(lang) {
-      this.currentLanguage = lang;
-      // Implement language switching logic here
+      this.updateLanguage(lang);
     },
     onEditProfileClick() {
       navigateTo("profileAvatar");

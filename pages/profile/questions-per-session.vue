@@ -23,6 +23,8 @@
 
 <script>
 import CustomHeader from "@/components/nav/custom-header.vue";
+import { mapState, mapActions } from "pinia";
+import { useUserStore } from "@/stores/user";
 
 export default {
   components: {
@@ -30,7 +32,6 @@ export default {
   },
   data() {
     return {
-      selectedOption: 10,
       options: [
         { label: "5 Questions", value: 5 },
         { label: "10 Questions", value: 10 },
@@ -39,10 +40,16 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState(useUserStore, ["settings"]),
+    selectedOption() {
+      return this.settings.questionsPerSession;
+    },
+  },
   methods: {
+    ...mapActions(useUserStore, ["setQuestionsPerSession"]),
     selectOption(value) {
-      this.selectedOption = value;
-      // Here you would typically save the preference
+      this.setQuestionsPerSession(value);
     },
   },
 };
