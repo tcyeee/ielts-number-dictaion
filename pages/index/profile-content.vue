@@ -117,6 +117,13 @@
         </view>
       </view>
 
+      <button class="contact-link" open-type="contact">联系客服</button>
+
+      <view class="copyright">
+        <text class="copyright-text">© 2026 IELTS Dictation. All rights reserved.</text>
+        <text class="copyright-text" style="font-size: 20rpx;">本应用为第三方备考工具，与 IELTS 官方无任何隶属或合作关系</text>
+      </view>
+
     </view>
   </view>
 </template>
@@ -314,6 +321,32 @@ export default {
   &.active {
     background-color: $accent-blue;
     color: #ffffff;
+  }
+}
+
+.contact-link {
+  background-color: transparent;
+  color: rgb(173, 173, 173);
+  font-size: 25rpx;
+  margin-top: 80rpx;
+  border: none;
+  line-height: 1.5;
+
+  &::after {
+    border: none;
+  }
+}
+
+.copyright {
+  text-align: center;
+  padding: 40rpx 0;
+  margin-bottom: 150rpx;
+
+  .copyright-text {
+    font-size: 24rpx;
+    color: $text-sub;
+    display: block;
+    margin-bottom: 10rpx;
   }
 }
 </style>
