@@ -188,7 +188,7 @@ export default {
           align-items: flex-end;
 
           .bar-fill {
-            width: 50%;
+            width: 70%;
             background-color: #2b86ff;
             border-radius: 8rpx;
             min-height: 8rpx; // ensure small values are visible
