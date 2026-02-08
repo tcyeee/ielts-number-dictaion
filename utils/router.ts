@@ -6,6 +6,7 @@ export const ROUTES = {
   dictation: '/pages/dictation',
   result: '/pages/result',
   history: '/pages/history',
+  profileAvatar: '/pages/profile/avatar',
 } as const
 
 type RouteName = keyof typeof ROUTES

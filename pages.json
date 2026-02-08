@@ -3,7 +3,8 @@
 		{"path": "pages/index/index","style": { "navigationStyle": "custom", "navigationBarTitleText": "首页" }},
 		{"path": "pages/category","style": { "navigationStyle": "custom", "navigationBarTitleText": "分类" }},
 		{"path": "pages/dictation","style": { "navigationStyle": "custom", "navigationBarTitleText": "听写" }},
-		{"path": "pages/result","style": { "navigationStyle": "custom", "navigationBarTitleText": "结果" }}
+		{"path": "pages/result","style": { "navigationStyle": "custom", "navigationBarTitleText": "结果" }},
+		{"path": "pages/profile/avatar","style": { "navigationStyle": "custom", "navigationBarTitleText": "Edit Profile" }}
 	],
 	"globalStyle": {
 		"navigationBarBackgroundColor": "#F8F8F8",
