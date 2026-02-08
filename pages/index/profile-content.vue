@@ -14,7 +14,7 @@
         </view>
         <text class="user-name">{{ userInfo.name }}</text>
         <text class="user-stats">Level {{ userInfo.level }} • {{ userInfo.streak }} Day Streak</text>
-        <view class="edit-profile-btn">
+        <view class="edit-profile-btn" @click="onEditProfileClick">
           <text class="btn-text">Edit Profile</text>
         </view>
       </view>
@@ -48,7 +48,7 @@
         </view>
 
         <!-- Questions Per Session -->
-        <view class="menu-item">
+        <view class="menu-item" @click="onQuestionsPerSessionClick">
           <view class="item-left">
             <view class="icon-box" style="background-color: rgba(43, 134, 255, 0.1)">
               <!-- List Icon -->
@@ -157,6 +157,9 @@ export default {
       this.currentLanguage = lang;
       // Implement language switching logic here
     },
+    onEditProfileClick() {
+      navigateTo("profileAvatar");
+    },
     onPrivacyClick() {
       navigateTo("profilePrivacy");
     },
@@ -165,6 +168,9 @@ export default {
     },
     onNotificationClick() {
       navigateTo("profileNotification");
+    },
+    onQuestionsPerSessionClick() {
+      navigateTo("profileQuestionsPerSession");
     },
   },
 };
