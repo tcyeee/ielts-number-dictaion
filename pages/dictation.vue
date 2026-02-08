@@ -1,16 +1,7 @@
 <template>
+  <CustomNavbar title="Number Dictation" />
   <view class="container">
-    <!-- Custom Navbar -->
-    <view class="navbar" :style="{ paddingTop: safeAreaInsets.top + 'px' }">
-      <view class="nav-left" @click="goBack">
-        <text class="icon">✕</text>
-      </view>
-      <text class="nav-title">Number Dictation</text>
-      <view class="nav-right">
-        <text class="icon">?</text>
-      </view>
-    </view>
-
+    <SafeAreaTop />
     <view class="content">
       <!-- Progress Section -->
       <view class="progress-section">
@@ -41,16 +32,7 @@
         </view>
 
         <!-- Slider & Time -->
-        <slider 
-          class="audio-slider" 
-          :value="currentProgress" 
-          min="0" 
-          :max="duration" 
-          activeColor="#007aff" 
-          backgroundColor="#3a3a3c" 
-          block-size="12"
-          @change="onSliderChange"
-        />
+        <slider class="audio-slider" :value="currentProgress" min="0" :max="duration" activeColor="#007aff" backgroundColor="#3a3a3c" block-size="12" @change="onSliderChange" />
         <view class="time-row">
           <text class="time-text">{{ formatTime(currentTime) }}</text>
           <text class="time-text">{{ formatTime(duration) }}</text>
@@ -76,14 +58,7 @@
       <view class="input-section">
         <text class="input-label">Enter the number you hear</text>
         <view class="input-box">
-          <input 
-            type="digit" 
-            class="number-input" 
-            placeholder="0.00" 
-            placeholder-class="placeholder-style"
-            v-model="answer"
-            :focus="true"
-          />
+          <input type="digit" class="number-input" placeholder="0.00" placeholder-class="placeholder-style" v-model="answer" :focus="true" />
         </view>
       </view>
 
@@ -97,18 +72,23 @@
 </template>
 
 <script>
+import CustomNavbar from "@/components/nav/custom-header.vue";
+import SafeAreaTop from "@/components/safe-area/safe-area-top.vue";
 export default {
+  components: {
+    CustomNavbar,
+    SafeAreaTop,
+  },
   data() {
     return {
-      safeAreaInsets: { top: 44 }, // Default fallback
       currentQuestion: 3,
       totalQuestions: 10,
       currentTime: 2,
       duration: 5,
       isPlaying: false,
       playbackRate: 1.0,
-      answer: ''
-    }
+      answer: "",
+    };
   },
   computed: {
     progressPercentage() {
@@ -116,14 +96,9 @@ export default {
     },
     currentProgress() {
       return this.currentTime;
-    }
+    },
   },
-  onLoad() {
-    const sysInfo = uni.getSystemInfoSync();
-    if (sysInfo.safeAreaInsets) {
-      this.safeAreaInsets = sysInfo.safeAreaInsets;
-    }
-  },
+  onLoad() {},
   methods: {
     goBack() {
       uni.navigateBack();
@@ -131,7 +106,7 @@ export default {
     formatTime(seconds) {
       const m = Math.floor(seconds / 60);
       const s = Math.floor(seconds % 60);
-      return `${m}:${s.toString().padStart(2, '0')}`;
+      return `${m}:${s.toString().padStart(2, "0")}`;
     },
     togglePlay() {
       this.isPlaying = !this.isPlaying;
@@ -148,13 +123,13 @@ export default {
       this.currentTime = e.detail.value;
     },
     submitAnswer() {
-      console.log('Answer:', this.answer);
+      console.log("Answer:", this.answer);
     },
     notSure() {
-      console.log('Not sure');
-    }
-  }
-}
+      console.log("Not sure");
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -222,7 +197,7 @@ $text-secondary: #8e8e93;
   .counter {
     font-size: 14px;
     color: $text-secondary;
-    
+
     .highlight {
       color: $text-color;
       font-weight: bold;
@@ -258,7 +233,7 @@ $text-secondary: #8e8e93;
     display: flex;
     align-items: center;
     margin-bottom: 24px;
-    
+
     .icon-box {
       width: 48px;
       height: 48px;
@@ -268,23 +243,23 @@ $text-secondary: #8e8e93;
       align-items: center;
       justify-content: center;
       margin-right: 16px;
-      
+
       .speaker-icon {
         font-size: 24px;
         color: $primary-blue;
       }
     }
-    
+
     .track-info {
       display: flex;
       flex-direction: column;
-      
+
       .track-title {
         font-size: 16px;
         font-weight: bold;
         margin-bottom: 4px;
       }
-      
+
       .track-subtitle {
         font-size: 13px;
         color: $text-secondary;
@@ -299,7 +274,7 @@ $text-secondary: #8e8e93;
     justify-content: center;
     gap: 4px;
     margin-bottom: 20px;
-    
+
     .bar {
       width: 4px;
       background-color: $primary-blue;
@@ -319,7 +294,7 @@ $text-secondary: #8e8e93;
     justify-content: space-between;
     margin-top: 8px;
     margin-bottom: 20px;
-    
+
     .time-text {
       font-size: 12px;
       color: $text-secondary;
@@ -331,20 +306,20 @@ $text-secondary: #8e8e93;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    
+
     .control-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      
+
       &.sm {
         width: 50px;
         height: 50px;
         border-radius: 25px;
         background-color: rgba(255, 255, 255, 0.1);
       }
-      
+
       &.lg {
         width: 70px;
         height: 70px;
@@ -352,7 +327,7 @@ $text-secondary: #8e8e93;
         background-color: $primary-blue;
         box-shadow: 0 4px 12px rgba($primary-blue, 0.4);
       }
-      
+
       .control-icon {
         font-size: 18px;
         color: $text-color;
@@ -363,7 +338,7 @@ $text-secondary: #8e8e93;
         font-size: 24px;
         color: white;
       }
-      
+
       .control-label {
         font-size: 10px;
         color: $text-secondary;
@@ -388,7 +363,7 @@ $text-secondary: #8e8e93;
 
   .input-box {
     width: 100%;
-    
+
     .number-input {
       width: 100%;
       height: 60px;
@@ -421,7 +396,7 @@ $text-secondary: #8e8e93;
     align-items: center;
     justify-content: center;
     border: none;
-    
+
     &::after {
       border: none;
     }
