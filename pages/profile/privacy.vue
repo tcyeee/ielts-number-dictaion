@@ -1,8 +1,6 @@
 <template>
-  <custom-header title="Privacy Policy" />
-  <SafeAreaTop />
-
   <view class="container">
+    <custom-header title="Privacy Policy" />
     <scroll-view scroll-y class="content-scroll">
       <view class="content-wrapper">
         <text class="last-updated">LAST UPDATED: OCTOBER 2023</text>
@@ -99,10 +97,9 @@
 
 <script>
 import CustomHeader from "@/components/nav/custom-header.vue";
-import SafeAreaTop from "@/components/safe-area/safe-area-top.vue";
 
 export default {
-  components: { CustomHeader, SafeAreaTop },
+  components: { CustomHeader },
 };
 </script>
 
@@ -112,6 +109,7 @@ export default {
   background-color: $bg-color;
   display: flex;
   flex-direction: column;
+  padding-top: 30rpx;
 }
 
 .content-scroll {

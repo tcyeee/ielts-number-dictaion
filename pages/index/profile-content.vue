@@ -36,7 +36,7 @@
       <!-- Settings Group -->
       <view class="menu-group">
         <!-- Notification Settings -->
-        <view class="menu-item">
+        <view class="menu-item" @click="onNotificationClick">
           <view class="item-left">
             <view class="icon-box" style="background-color: rgba(157, 101, 255, 0.1)">
               <!-- Bell Icon -->
@@ -162,6 +162,9 @@ export default {
     },
     onTermsClick() {
       navigateTo("profileTerms");
+    },
+    onNotificationClick() {
+      navigateTo("profileNotification");
     },
   },
 };

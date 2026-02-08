@@ -1,7 +1,6 @@
 <template>
   <view class="container">
     <custom-header title="Notification Settings" />
-
     <scroll-view scroll-y class="content-scroll">
       <view class="content-wrapper">
         <!-- Notification Toggles Card -->
@@ -106,6 +105,7 @@ export default {
   background-color: $bg-color;
   display: flex;
   flex-direction: column;
+  padding-top: 30rpx;
 }
 
 .content-scroll {
