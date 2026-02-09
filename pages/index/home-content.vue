@@ -67,7 +67,7 @@
         <!-- Other Modules -->
         <view class="card module-list-item" v-for="(item, index) in modules" :key="index" hover-class="card-hover">
           <view class="module-icon-box list-icon-box">
-            <view :class="['module-icon', item.icon]" style="color: #fff;"></view>
+            <view :class="['module-icon icon-size-32', item.icon]"></view>
           </view>
           <view class="module-content">
             <view class="module-header">
@@ -113,25 +113,25 @@ export default {
         {
           title: "Phone Numbers",
           sub: "Master digit groups",
-          icon: "icon--f7--phone-fill",
+          icon: "icon--f7--phone",
           progress: 70,
         },
         {
           title: "Dates & Times",
           sub: "Months & years",
-          icon: "icon--fluent--calendar-date-28-filled",
+          icon: "icon--fluent--calendar-date-24-regular",
           progress: 45,
         },
         {
           title: "Prices",
           sub: "Currencies & decimals",
-          icon: "icon--bxs--dollar-circle",
+          icon: "icon--bx--dollar-circle",
           progress: 80,
         },
         {
           title: "Addresses",
           sub: "Postal codes & streets",
-          icon: "icon--mynaui--map-pinned-solid",
+          icon: "icon--mynaui--map-pinned",
           progress: 30,
         },
       ],
@@ -371,20 +371,20 @@ export default {
   display: flex;
   align-items: center;
   padding: 36rpx;
-  border: 1rpx solid #253145;
+  border: 1rpx solid var(--border-color);
 }
 
 .list-icon-box {
   width: 90rpx;
   height: 90rpx;
-  background-color: #1a2332;
+  background-color: var(--bg-color);
   border-radius: 24rpx;
   margin-right: 30rpx;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1rpx solid #253145;
+  border: 1rpx solid var(--border-color);
 }
 
 .module-content {
@@ -411,13 +411,17 @@ export default {
 }
 
 .module-icon {
-  color: #bda4fd;
+  color: var(--accent-blue);
+}
+
+.mixed-icon-box .module-icon {
+  color: #fff;
 }
 
 .progress-bar-bg {
   width: 100%;
   height: 12rpx;
-  background-color: #253145;
+  background-color: var(--hover-bg);
   border-radius: 6rpx;
   overflow: hidden;
 }

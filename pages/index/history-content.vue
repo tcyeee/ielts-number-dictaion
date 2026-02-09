@@ -27,25 +27,16 @@
     <!-- Weekly Performance Chart -->
     <weekly-performance-chart :days="days" />
 
-    <!-- Tabs -->
-    <view class="tabs">
-      <view class="tab-item" :class="{ active: currentTab === index }" v-for="(tab, index) in tabs" :key="index" @click="currentTab = index">
-        <text class="tab-text">{{ tab }}</text>
-        <view class="active-indicator" v-if="currentTab === index"></view>
-      </view>
-    </view>
-
     <!-- Recent Sessions -->
     <view class="section">
       <view class="section-header">
         <text class="section-title-small">Recent Sessions</text>
-        <text class="see-all">See All</text>
       </view>
 
       <view class="session-list">
         <view class="card session-card" v-for="(session, index) in filteredSessions" :key="index">
           <view class="session-left">
-            <view class="session-icon">
+            <view class="session-icon" :class="getSessionTypeClass(session.type)">
               <text class="icon-text">{{ session.icon }}</text>
             </view>
             <view class="session-info">
@@ -78,20 +69,20 @@ export default {
   data() {
     return {
       days: ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
-      tabs: ["All Sessions", "Numbers", "Dates", "Prices"],
+      tabs: ["All Sessions", "Numbers", "Dates", "Prices", "Addresses"],
       currentTab: 0,
       sessions: [
         {
           type: "Numbers",
-          title: "Large Numbers",
+          title: "Phone Numbers",
           date: "Today, 2:45 PM",
           score: "18/20",
           percent: 90,
-          icon: "123",
+          icon: "📱",
         },
         {
           type: "Dates",
-          title: "Historical Dates",
+          title: "Dates & Times",
           date: "Yesterday, 10:15 AM",
           score: "15/20",
           percent: 75,
@@ -99,19 +90,19 @@ export default {
         },
         {
           type: "Prices",
-          title: "Retail Prices",
+          title: "Prices",
           date: "Oct 23, 5:30 PM",
           score: "20/20",
           percent: 100,
-          icon: "💵",
+          icon: "🏷️",
         },
         {
-          type: "Numbers",
-          title: "Decimals & Fractions",
+          type: "Addresses",
+          title: "Addresses",
           date: "Oct 22, 9:00 AM",
           score: "16/20",
           percent: 80,
-          icon: "⅐",
+          icon: "📍",
         },
       ],
     };
@@ -129,6 +120,15 @@ export default {
       if (percent >= 90) return "success";
       if (percent >= 70) return "warning";
       return "danger";
+    },
+    getSessionTypeClass(type) {
+      const map = {
+        Numbers: "type-blue",
+        Dates: "type-purple",
+        Prices: "type-green",
+        Addresses: "type-orange",
+      };
+      return map[type] || "type-blue";
     },
     navigateTo(url) {
       uni.navigateTo({
@@ -265,30 +265,54 @@ export default {
 
 .session-card {
   background-color: var(--card-bg);
-  border-radius: 24rpx;
-  padding: 30rpx;
+  border-radius: 32rpx;
+  padding: 32rpx;
   margin-bottom: 24rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: 1px solid var(--border-color);
 
   .session-left {
     display: flex;
     align-items: center;
 
     .session-icon {
-      width: 80rpx;
-      height: 80rpx;
-      background-color: rgba(17, 24, 35, 0.5);
+      width: 96rpx;
+      height: 96rpx;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-right: 24rpx;
+      margin-right: 30rpx;
 
       .icon-text {
-        font-size: 32rpx;
-        color: var(--accent-blue);
+        font-size: 40rpx;
+      }
+
+      &.type-blue {
+        background-color: rgba(43, 134, 255, 0.15);
+        .icon-text {
+          color: #2b86ff;
+        }
+      }
+      &.type-purple {
+        background-color: rgba(124, 77, 255, 0.15);
+        .icon-text {
+          color: #7c4dff;
+        }
+      }
+      &.type-green {
+        background-color: rgba(0, 200, 83, 0.15);
+        .icon-text {
+          color: #00c853;
+        }
+      }
+      &.type-orange {
+        background-color: rgba(255, 152, 0, 0.15);
+        .icon-text {
+          color: #ff9800;
+        }
       }
     }
 
@@ -298,14 +322,14 @@ export default {
 
       .session-title {
         color: var(--text-main);
-        font-size: 30rpx;
+        font-size: 32rpx;
         font-weight: bold;
         margin-bottom: 8rpx;
       }
 
       .session-date {
         color: var(--text-sub);
-        font-size: 24rpx;
+        font-size: 26rpx;
       }
     }
   }
@@ -317,14 +341,14 @@ export default {
 
     .session-score {
       color: var(--text-main);
-      font-size: 32rpx;
-      font-weight: bold;
+      font-size: 34rpx;
+      font-weight: 800;
       margin-bottom: 8rpx;
     }
 
     .session-percent {
-      font-size: 24rpx;
-      font-weight: bold;
+      font-size: 26rpx;
+      font-weight: 800;
 
       &.success {
         color: var(--accent-green);
@@ -333,7 +357,7 @@ export default {
         color: var(--accent-orange);
       }
       &.danger {
-        color: #ff3b30;
+        color: var(--accent-red);
       }
     }
   }
