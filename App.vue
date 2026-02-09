@@ -33,6 +33,7 @@ page {
   --border-color: rgba(0, 0, 0, 0.1);
   --hover-bg: rgba(0, 0, 0, 0.05);
   --mask-bg: rgba(0, 0, 0, 0.6);
+  --nav-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.12);
 
   background-color: var(--bg-color);
 }
@@ -52,6 +53,8 @@ page {
     --border-color: rgba(255, 255, 255, 0.1);
     --hover-bg: rgba(255, 255, 255, 0.05);
     --mask-bg: rgba(0, 0, 0, 0.6);
+    --nav-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.6),
+      0 0 16rpx rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -69,6 +72,7 @@ page {
   --border-color: rgba(0, 0, 0, 0.1) !important;
   --hover-bg: rgba(0, 0, 0, 0.05) !important;
   --mask-bg: rgba(0, 0, 0, 0.6) !important;
+  --nav-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.12) !important;
 }
 
 /* 手动强制暗色主题 - 覆盖 media query */
@@ -85,6 +89,8 @@ page {
   --border-color: rgba(255, 255, 255, 0.1) !important;
   --hover-bg: rgba(255, 255, 255, 0.05) !important;
   --mask-bg: rgba(0, 0, 0, 0.6) !important;
+  --nav-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.6),
+    0 0 16rpx rgba(255, 255, 255, 0.08) !important;
 }
 
 [class^="icon--"],

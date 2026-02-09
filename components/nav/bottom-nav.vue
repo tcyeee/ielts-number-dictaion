@@ -57,14 +57,13 @@ export default {
   left: 40rpx;
   right: 40rpx;
   height: 120rpx;
-  background-color: #232e42;
-  border: 5rpx solid rgba(255, 255, 255, 0.1);
+  background-color: var(--card-bg);
+  border: 5rpx solid var(--border-color);
   border-radius: 60rpx;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.6),
-    0 0 16rpx rgba(255, 255, 255, 0.08);
+  box-shadow: var(--nav-shadow);
   z-index: 100;
   padding: 0 10rpx;
 }
