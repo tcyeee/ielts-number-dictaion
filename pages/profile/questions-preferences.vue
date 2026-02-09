@@ -32,9 +32,6 @@
         </view>
 
         <text class="note">Note: At least one category must be selected to start a practice session.</text>
-
-        <!-- Bottom spacing -->
-        <view class="footer-spacer"></view>
       </view>
     </scroll-view>
   </view>
@@ -46,7 +43,7 @@ import { mapState, mapActions } from "pinia";
 import { useUserStore } from "@/stores/user";
 import themeMixin from "@/mixins/themeMixin.js";
 
-export default defineComponent({
+export default {
   name: "QuestionsPreferences",
   mixins: [themeMixin],
   components: {
@@ -159,17 +156,18 @@ export default defineComponent({
       });
     },
   },
-});
+};
 </script>
 
 <style lang="scss" scoped>
 .container {
   min-height: 100vh;
+  padding-top: 20px;
   background-color: var(--bg-color);
 }
 
 .content-scroll {
-  height: calc(100vh - 44px - var(--status-bar-height));
+  height: calc(100vh - 44px);
 }
 
 .content-wrapper {
