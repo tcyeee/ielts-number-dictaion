@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
     <custom-header title="Edit Profile" />
     <view class="content">
       <view class="avatar-wrapper" @click="changeAvatar">
@@ -33,6 +33,8 @@
 
 <script>
 import CustomHeader from "@/components/nav/custom-header.vue";
+import { mapState } from "pinia";
+import { useUserStore } from "@/stores/user";
 
 export default Vue.extend({
   components: {
@@ -44,6 +46,12 @@ export default Vue.extend({
       avatarUrl: "https://via.placeholder.com/150",
       nickname: "Alex",
     };
+  },
+  computed: {
+    ...mapState(useUserStore, ["settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
   },
   methods: {
     changeAvatar() {
@@ -73,13 +81,35 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-page {
-  background-color: $bg-color;
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
 }
 
 .container {
   min-height: 100vh;
-  background-color: $bg-color;
+  background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
 }
@@ -105,7 +135,7 @@ page {
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--border-color);
 }
 
 .avatar-image {
@@ -157,7 +187,7 @@ page {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: 2px solid $bg-color; // Cutout effect
+    border: 2px solid var(--bg-color); // Cutout effect
   }
 }
 
@@ -173,7 +203,7 @@ page {
 }
 
 .label {
-  color: $text-sub;
+  color: var(--text-sub);
   font-size: 12px;
   font-weight: bold;
   letter-spacing: 1px;
@@ -183,14 +213,14 @@ page {
 }
 
 .input-container {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 12px;
   padding: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
 }
 
 .input {
-  color: $text-main;
+  color: var(--text-main);
   font-size: 16px;
   width: 100%;
 }
@@ -205,7 +235,7 @@ page {
 }
 
 .save-btn {
-  background-color: $accent-blue;
+  background-color: var(--accent-blue);
   color: #ffffff;
   border-radius: 12px;
   font-size: 16px;

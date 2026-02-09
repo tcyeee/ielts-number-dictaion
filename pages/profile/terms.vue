@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
     <custom-header title="Terms of Service" />
     <scroll-view scroll-y class="content-scroll">
       <view class="content-wrapper">
@@ -50,19 +50,50 @@
 
 <script>
 import CustomHeader from "@/components/nav/custom-header.vue";
+import { mapState } from "pinia";
+import { useUserStore } from "@/stores/user";
+
 export default {
   components: { CustomHeader },
+  computed: {
+    ...mapState(useUserStore, ["settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-page {
-  background-color: $bg-color;
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
 }
 
 .container {
   min-height: 100vh;
-  background-color: $bg-color;
+  background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
   padding-top: 30rpx;
@@ -87,14 +118,14 @@ page {
 .section-title {
   font-size: 18px;
   font-weight: bold;
-  color: $accent-blue;
+  color: var(--accent-blue);
   margin-bottom: 12px;
   display: block;
 }
 
 .paragraph {
   font-size: 14px;
-  color: $text-sub;
+  color: var(--text-sub);
   line-height: 1.6;
   display: block;
 }
@@ -106,13 +137,14 @@ page {
 
 .divider {
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--border-color);
   margin-bottom: 24px;
 }
 
 .last-updated {
   font-size: 12px;
-  color: rgba($text-sub, 0.6);
+  color: var(--text-sub);
+  opacity: 0.6;
   text-align: center;
   display: block;
 }

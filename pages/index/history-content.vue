@@ -171,6 +171,8 @@ export default {
 
 .container {
   padding: 40rpx 40rpx calc(40rpx + 120rpx + 5vh) 40rpx;
+  background-color: var(--bg-color);
+  min-height: 100vh;
 }
 
 /* Header */

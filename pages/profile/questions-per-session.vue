@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
     <custom-header title="Questions Per Session" />
 
     <scroll-view scroll-y class="content-scroll">
@@ -42,6 +42,9 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ["settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
     selectedOption() {
       return this.settings.questionsPerSession;
     },
@@ -56,13 +59,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-page {
-  background-color: $bg-color;
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
 }
 
 .container {
   min-height: 100vh;
-  background-color: $bg-color;
+  background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
 }
@@ -86,21 +111,21 @@ page {
 }
 
 .option-card {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 12px;
   padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease;
 
   &.active {
-    border-color: $accent-blue;
-    background-color: rgba($accent-blue, 0.05);
+    border-color: var(--accent-blue);
+    background-color: rgba(43, 134, 255, 0.05);
 
     .option-text {
-      color: #ffffff;
+      color: var(--text-main);
       font-weight: bold;
     }
   }
@@ -108,14 +133,14 @@ page {
 
 .option-text {
   font-size: 16px;
-  color: #ffffff;
+  color: var(--text-main);
   font-weight: 500;
 }
 
 .check-circle {
   width: 24px;
   height: 24px;
-  background-color: $accent-blue;
+  background-color: var(--accent-blue);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -130,7 +155,7 @@ page {
 
 .description-text {
   font-size: 14px;
-  color: $text-sub;
+  color: var(--text-sub);
   text-align: center;
   line-height: 1.6;
   padding: 0 16px;

@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
     <custom-header title="Notification Settings" />
     <scroll-view scroll-y class="content-scroll">
       <view class="content-wrapper">
@@ -82,6 +82,9 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ["settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
     dailyReminder() {
       return this.settings.notification.dailyReminder;
     },
@@ -108,13 +111,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-page {
-  background-color: $bg-color;
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
 }
 
 .container {
   min-height: 100vh;
-  background-color: $bg-color;
+  background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
   padding-top: 30rpx;
@@ -132,10 +157,10 @@ page {
 }
 
 .card {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 12px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
 }
 
 .setting-item {
@@ -152,7 +177,7 @@ page {
 
 .setting-title {
   font-size: 16px;
-  color: $text-main;
+  color: var(--text-main);
   font-weight: bold;
   margin-bottom: 4px;
   display: block;
@@ -160,14 +185,14 @@ page {
 
 .setting-desc {
   font-size: 12px;
-  color: $text-sub;
+  color: var(--text-sub);
   line-height: 1.4;
   display: block;
 }
 
 .divider {
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--border-color);
   margin: 0 16px;
 }
 
@@ -178,7 +203,7 @@ page {
 
 .section-title {
   font-size: 12px;
-  color: $text-sub;
+  color: var(--text-sub);
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -199,7 +224,7 @@ page {
 .icon-box {
   width: 32px;
   height: 32px;
-  background-color: rgba($accent-blue, 0.15);
+  background-color: rgba(43, 134, 255, 0.15);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -211,14 +236,14 @@ page {
 .clock-icon {
   width: 16px;
   height: 16px;
-  border: 1.5px solid $accent-blue;
+  border: 1.5px solid var(--accent-blue);
   border-radius: 50%;
   position: relative;
 }
 
 .clock-hand {
   position: absolute;
-  background-color: $accent-blue;
+  background-color: var(--accent-blue);
   border-radius: 1px;
   transform-origin: bottom center;
   left: 50%;
@@ -240,7 +265,7 @@ page {
 
 .schedule-label {
   font-size: 16px;
-  color: $text-main;
+  color: var(--text-main);
   font-weight: 500;
 }
 
@@ -257,13 +282,13 @@ page {
 }
 
 .time-text {
-  color: $accent-blue;
+  color: var(--accent-blue);
   font-size: 14px;
   font-weight: bold;
 }
 
 .arrow {
-  color: $text-sub;
+  color: var(--text-sub);
   font-size: 18px;
   margin-left: 4px;
 }
@@ -271,7 +296,7 @@ page {
 .description-text {
   margin-top: 16px;
   font-size: 13px;
-  color: $text-sub;
+  color: var(--text-sub);
   line-height: 1.5;
   display: block;
 }
