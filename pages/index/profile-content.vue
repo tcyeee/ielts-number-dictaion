@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
     <!-- Top Safe Area -->
     <safe-area-top size="s" />
 
@@ -179,9 +179,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+}
+
 .container {
   min-height: 100vh;
-  background-color: $bg-color;
+  background-color: var(--bg-color);
   padding-bottom: 200rpx; /* Space for bottom nav */
 }
 
@@ -208,7 +234,7 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 4rpx solid $card-bg;
+  border: 4rpx solid var(--card-bg);
 }
 
 .edit-badge {
@@ -217,46 +243,46 @@ export default {
   right: 0;
   width: 48rpx;
   height: 48rpx;
-  background-color: $accent-blue;
+  background-color: var(--accent-blue);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 4rpx solid $bg-color;
+  border: 4rpx solid var(--bg-color);
 }
 
 .user-name {
   font-size: 40rpx;
   font-weight: bold;
-  color: $text-main;
+  color: var(--text-main);
   margin-bottom: 8rpx;
 }
 
 .user-stats {
   font-size: $uni-font-size-base;
-  color: $text-sub;
+  color: var(--text-sub);
   margin-bottom: 30rpx;
 }
 
 .edit-profile-btn {
   padding: 12rpx 40rpx;
-  border: 2rpx solid #2c3545;
+  border: 2rpx solid var(--border-color);
   border-radius: 40rpx;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--hover-bg);
 }
 
 .btn-text {
   font-size: $uni-font-size-base;
-  color: $text-main;
+  color: var(--text-main);
   font-weight: 500;
 }
 
 .menu-group {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 30rpx;
   padding: 10rpx 0;
   margin-bottom: 30rpx;
-  border: 1rpx solid rgba(255, 255, 255, 0.05);
+  border: 1rpx solid var(--border-color);
 }
 
 .menu-item {
@@ -266,7 +292,7 @@ export default {
   padding: 30rpx 40rpx;
   /* active state */
   &:active {
-    background-color: $uni-bg-color-hover;
+    background-color: var(--hover-bg);
   }
 }
 
@@ -287,7 +313,7 @@ export default {
 
 .item-text {
   font-size: $uni-font-size-lg;
-  color: $text-main;
+  color: var(--text-main);
   font-weight: 500;
 }
 
@@ -298,14 +324,14 @@ export default {
 
 .value-text {
   font-size: $uni-font-size-base;
-  color: $accent-blue;
+  color: var(--accent-blue);
   font-weight: 600;
   margin-right: 10rpx;
 }
 
 .arrow {
   font-size: 40rpx;
-  color: $text-sub;
+  color: var(--text-sub);
   font-weight: 300;
   margin-right: -10rpx;
   line-height: 1;
@@ -314,7 +340,7 @@ export default {
 /* Segment Control */
 .segment-control {
   display: flex;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--hover-bg);
   border-radius: 12rpx;
   padding: 4rpx;
 }
@@ -322,13 +348,13 @@ export default {
 .segment-option {
   padding: 8rpx 20rpx;
   font-size: 24rpx;
-  color: $text-sub;
+  color: var(--text-sub);
   border-radius: 8rpx;
   font-weight: 600;
   transition: all 0.2s;
 
   &.active {
-    background-color: $accent-blue;
+    background-color: var(--accent-blue);
     color: #ffffff;
   }
 }
@@ -354,7 +380,7 @@ export default {
 
   .copyright-text {
     font-size: 24rpx;
-    color: $text-sub;
+    color: var(--text-sub);
     display: block;
     margin-bottom: 10rpx;
   }

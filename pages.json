@@ -10,8 +10,9 @@
 		{"path": "pages/profile/questions-per-session","style": { "navigationStyle": "custom", "navigationBarTitleText": "Questions Per Session" }}
 	],
 	"globalStyle": {
-		"navigationBarBackgroundColor": "#111823",
-		"backgroundColor": "#111823"
+		"navigationBarBackgroundColor": "@navBgColor",
+		"navigationBarTextStyle": "@navTextStyle",
+		"backgroundColor": "@bgColor"
 	},
 	"uniIdRouter": {}
 }

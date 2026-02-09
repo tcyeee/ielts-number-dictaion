@@ -1,6 +1,6 @@
 <template>
   <safe-area size="s" />
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
     <!-- Header Section -->
     <view class="header">
       <view class="user-info">
@@ -92,6 +92,8 @@ import SafeArea from "@/components/safe-area/safe-area-top.vue";
 import SafeAreaBottom from "@/components/safe-area/safe-area-bottom.vue";
 import CircularProgress from "@/components/circular-progress/circular-progress.vue";
 import { navigateTo } from "@/utils/router";
+import { mapState } from "pinia";
+import { useUserStore } from "@/stores/user";
 
 export default {
   components: {
@@ -135,6 +137,12 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState(useUserStore, ["settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
+  },
   onLoad() {},
   methods: {
     toCategory() {
@@ -145,6 +153,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+}
+
 .container {
   padding: 40rpx;
   padding-bottom: 180rpx;
@@ -169,7 +203,7 @@ export default {
   height: 100rpx;
   border-radius: 50%;
   margin-right: 24rpx;
-  border: 2rpx solid $accent-blue;
+  border: 2rpx solid var(--accent-blue);
 }
 
 .user-text {
@@ -178,13 +212,13 @@ export default {
 }
 
 .app-name {
-  color: $text-main;
+  color: var(--text-main);
   font-size: 36rpx;
   font-weight: bold;
 }
 
 .greeting {
-  color: $text-sub;
+  color: var(--text-sub);
   font-size: 28rpx;
   margin-top: 4rpx;
 }
@@ -192,7 +226,7 @@ export default {
 .notification-btn {
   width: 80rpx;
   height: 80rpx;
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 20rpx;
   display: flex;
   align-items: center;
@@ -205,7 +239,7 @@ export default {
 }
 
 .section-title {
-  color: $text-main;
+  color: var(--text-main);
   font-size: 34rpx;
   font-weight: bold;
   margin-bottom: 30rpx;
@@ -213,7 +247,7 @@ export default {
 }
 
 .card {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 30rpx;
   padding: 30rpx;
   transition: all 0.2s ease;
@@ -240,7 +274,7 @@ export default {
 }
 
 .card-label {
-  color: $text-main;
+  color: var(--text-main);
   font-size: 30rpx;
   font-weight: 500;
   margin-bottom: 8rpx;
@@ -248,11 +282,11 @@ export default {
 
 .card-subtext {
   font-size: 24rpx;
-  color: $text-sub;
+  color: var(--text-sub);
 }
 
 .success {
-  color: $accent-green;
+  color: var(--accent-green);
 }
 /* Modules List */
 .modules-list {
@@ -392,13 +426,13 @@ export default {
 }
 
 .module-title {
-  color: $text-main;
+  color: var(--text-main);
   font-size: 32rpx;
   font-weight: bold;
 }
 
 .module-percent {
-  color: $text-main;
+  color: var(--text-main);
   font-size: 32rpx;
   font-weight: bold;
 }
@@ -417,7 +451,7 @@ export default {
 
 .progress-bar-fill {
   height: 100%;
-  background-color: $accent-blue;
+  background-color: var(--accent-blue);
   border-radius: 4rpx;
 }
 
@@ -439,7 +473,7 @@ export default {
 }
 
 .streak-label {
-  color: $accent-blue;
+  color: var(--accent-blue);
   font-size: 24rpx;
   font-weight: bold;
   letter-spacing: 2rpx;
@@ -448,7 +482,7 @@ export default {
 }
 
 .streak-days {
-  color: $text-main;
+  color: var(--text-main);
   font-size: 48rpx;
   font-weight: bold;
 }
@@ -469,12 +503,12 @@ export default {
 }
 
 .checked {
-  background-color: $accent-blue;
+  background-color: var(--accent-blue);
   color: white;
 }
 
 .locked {
-  background-color: $card-bg;
-  color: $text-sub;
+  background-color: var(--card-bg);
+  color: var(--text-sub);
 }
 </style>

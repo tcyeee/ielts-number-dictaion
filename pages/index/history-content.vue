@@ -1,6 +1,6 @@
 <template>
   <safe-area size="s" />
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
 
     <!-- Header -->
     <view class="header">
@@ -67,6 +67,8 @@
 <script>
 import SafeArea from "@/components/safe-area/safe-area-top.vue";
 import WeeklyPerformanceChart from "@/components/chart/weekly-performance-chart.vue";
+import { mapState } from "pinia";
+import { useUserStore } from "@/stores/user";
 
 export default {
   components: {
@@ -115,6 +117,10 @@ export default {
     };
   },
   computed: {
+    ...mapState(useUserStore, ["settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
     filteredSessions() {
       if (this.currentTab === 0) return this.sessions;
       const type = this.tabs[this.currentTab];
@@ -137,6 +143,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+}
+
 .container {
   padding: 40rpx 40rpx calc(40rpx + 120rpx + 5vh) 40rpx;
 }
@@ -147,7 +179,7 @@ export default {
   margin-bottom: 40rpx;
 
   .page-title {
-    color: $text-main;
+    color: var(--text-main);
     font-size: 36rpx;
     font-weight: bold;
   }
@@ -162,7 +194,7 @@ export default {
 
 .stat-card {
   width: 48%;
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 24rpx;
   padding: 30rpx;
   box-sizing: border-box;
@@ -170,13 +202,13 @@ export default {
   flex-direction: column;
 
   .stat-label {
-    color: $text-sub;
+    color: var(--text-sub);
     font-size: 24rpx;
     margin-bottom: 16rpx;
   }
 
   .stat-value {
-    color: $text-main;
+    color: var(--text-main);
     font-size: 48rpx;
     font-weight: bold;
     margin-bottom: 8rpx;
@@ -188,7 +220,7 @@ export default {
     font-size: 24rpx;
 
     &.success {
-      color: $accent-green;
+      color: var(--accent-green);
     }
 
     .icon {
@@ -197,7 +229,7 @@ export default {
   }
 
   .stat-sub {
-    color: $text-sub;
+    color: var(--text-sub);
     font-size: 24rpx;
   }
 }
@@ -215,14 +247,14 @@ export default {
     white-space: nowrap;
 
     .tab-text {
-      color: $text-sub;
+      color: var(--text-sub);
       font-size: 28rpx;
       font-weight: 500;
     }
 
     &.active {
       .tab-text {
-        color: $accent-blue;
+        color: var(--accent-blue);
         font-weight: bold;
       }
 
@@ -232,7 +264,7 @@ export default {
         left: 0;
         right: 0;
         height: 4rpx;
-        background-color: $accent-blue;
+        background-color: var(--accent-blue);
         border-radius: 4rpx;
       }
     }
@@ -247,19 +279,19 @@ export default {
   margin-bottom: 30rpx;
 
   .section-title-small {
-    color: $text-main;
+    color: var(--text-main);
     font-size: 32rpx;
     font-weight: bold;
   }
 
   .see-all {
-    color: $accent-blue;
+    color: var(--accent-blue);
     font-size: 26rpx;
   }
 }
 
 .session-card {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 24rpx;
   padding: 30rpx;
   margin-bottom: 24rpx;
@@ -283,7 +315,7 @@ export default {
 
       .icon-text {
         font-size: 32rpx;
-        color: $accent-blue;
+        color: var(--accent-blue);
       }
     }
 
@@ -292,14 +324,14 @@ export default {
       flex-direction: column;
 
       .session-title {
-        color: $text-main;
+        color: var(--text-main);
         font-size: 30rpx;
         font-weight: bold;
         margin-bottom: 8rpx;
       }
 
       .session-date {
-        color: $text-sub;
+        color: var(--text-sub);
         font-size: 24rpx;
       }
     }
@@ -311,7 +343,7 @@ export default {
     align-items: flex-end;
 
     .session-score {
-      color: $text-main;
+      color: var(--text-main);
       font-size: 32rpx;
       font-weight: bold;
       margin-bottom: 8rpx;
@@ -322,10 +354,10 @@ export default {
       font-weight: bold;
 
       &.success {
-        color: $accent-green;
+        color: var(--accent-green);
       }
       &.warning {
-        color: $accent-orange;
+        color: var(--accent-orange);
       }
       &.danger {
         color: #ff3b30;

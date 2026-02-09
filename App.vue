@@ -13,8 +13,48 @@ export default {
 </script>
 
 <style lang="scss">
+/* 定义CSS变量 - 浅色主题 */
+page[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+  --mask-bg: rgba(0, 0, 0, 0.6);
+}
+
+/* 定义CSS变量 - 暗色主题 */
+page[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --mask-bg: rgba(0, 0, 0, 0.6);
+}
+
+/* 默认使用暗色主题 */
 page {
-  background-color: $uni-bg-color;
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+  --mask-bg: rgba(0, 0, 0, 0.6);
+
+  background-color: var(--bg-color);
 }
 
 [class^="icon--"],

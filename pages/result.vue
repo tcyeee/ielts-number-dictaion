@@ -1,5 +1,5 @@
 <template>
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
     <!-- Custom Navbar -->
     <view class="nav-bar" :style="{ paddingTop: statusBarHeight + 'px', height: (statusBarHeight + 44) + 'px' }">
       <view class="nav-left" @click="goBack">
@@ -96,6 +96,9 @@
 </template>
 
 <script>
+import { mapState } from "pinia";
+import { useUserStore } from "@/stores/user";
+
 export default {
   data() {
     return {
@@ -144,6 +147,10 @@ export default {
     };
   },
   computed: {
+    ...mapState(useUserStore, ["settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
     progressStyle() {
       const percentage = (this.score / this.total) * 100;
       return {
@@ -179,6 +186,32 @@ $error-red: #ff5252;
 $text-main: #ffffff;
 $text-sub: #889096;
 
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+}
+
 page {
   background-color: $bg-color;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
@@ -188,7 +221,7 @@ page {
 .container {
   width: 100%;
   min-height: 100vh;
-  background-color: $bg-color;
+  background-color: var(--bg-color);
   display: flex;
   flex-direction: column;
 }
@@ -205,7 +238,7 @@ page {
   justify-content: space-between;
   padding-left: 16px;
   padding-right: 16px;
-  background-color: $bg-color;
+  background-color: var(--bg-color);
   z-index: 100;
 
   .nav-left {
@@ -216,12 +249,12 @@ page {
   }
 
   .back-arrow {
-    color: $text-main;
+    color: var(--text-main);
     font-size: 20px;
   }
 
   .nav-title {
-    color: $text-main;
+    color: var(--text-main);
     font-size: 18px;
     font-weight: 600;
   }
@@ -261,7 +294,7 @@ page {
     .progress-inner {
       width: 108px;
       height: 108px;
-      background-color: $bg-color;
+      background-color: var(--bg-color);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -272,29 +305,29 @@ page {
     .score-main {
       font-size: 36px;
       font-weight: bold;
-      color: $text-main;
+      color: var(--text-main);
     }
     .score-divider {
       font-size: 24px;
-      color: $text-sub;
+      color: var(--text-sub);
       margin: 0 2px;
     }
     .score-total {
       font-size: 24px;
-      color: $text-sub;
+      color: var(--text-sub);
     }
   }
 
   .result-title {
     font-size: 24px;
     font-weight: bold;
-    color: $text-main;
+    color: var(--text-main);
     margin-bottom: 8px;
   }
 
   .result-subtitle {
     font-size: 14px;
-    color: $text-sub;
+    color: var(--text-sub);
   }
 }
 
@@ -305,7 +338,7 @@ page {
   margin-bottom: 30px;
 
   .stat-card {
-    background-color: $card-bg;
+    background-color: var(--card-bg);
     border-radius: 12px;
     width: 48%;
     padding: 16px;
@@ -326,14 +359,14 @@ page {
   }
 
   .stat-label {
-    color: $text-sub;
+    color: var(--text-sub);
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
   }
 
   .stat-value {
-    color: $text-main;
+    color: var(--text-main);
     font-size: 24px;
     font-weight: bold;
   }
@@ -345,7 +378,7 @@ page {
   margin-bottom: 30px;
 
   .section-title {
-    color: $text-main;
+    color: var(--text-main);
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 16px;
@@ -353,7 +386,7 @@ page {
   }
 
   .question-card {
-    background-color: $card-bg;
+    background-color: var(--card-bg);
     border-radius: 12px;
     padding: 16px;
     margin-bottom: 16px;
@@ -368,7 +401,7 @@ page {
   }
 
   .question-meta {
-    color: $text-sub;
+    color: var(--text-sub);
     font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
@@ -412,7 +445,7 @@ page {
   }
 
   .text-white {
-    color: $text-main;
+    color: var(--text-main);
   }
   .text-red {
     color: $error-red;
@@ -491,7 +524,7 @@ page {
 }
 
 .btn-secondary {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   .btn-text {
     color: white;
   }

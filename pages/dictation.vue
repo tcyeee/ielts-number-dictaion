@@ -1,6 +1,6 @@
 <template>
   <CustomNavbar title="Number Dictation" />
-  <view class="container">
+  <view class="container" :data-theme="isDarkMode ? 'dark' : 'light'">
     <SafeAreaTop />
     <view class="content">
       <!-- Progress Section -->
@@ -74,6 +74,9 @@
 <script>
 import CustomNavbar from "@/components/nav/custom-header.vue";
 import SafeAreaTop from "@/components/safe-area/safe-area-top.vue";
+import { mapState } from "pinia";
+import { useUserStore } from "@/stores/user";
+
 export default {
   components: {
     CustomNavbar,
@@ -91,6 +94,10 @@ export default {
     };
   },
   computed: {
+    ...mapState(useUserStore, ["settings"]),
+    isDarkMode() {
+      return this.settings.isDarkMode;
+    },
     progressPercentage() {
       return (this.currentQuestion / this.totalQuestions) * 100;
     },
@@ -134,10 +141,37 @@ export default {
 
 <style lang="scss">
 @import "@/uni.scss";
+
+/* 浅色主题变量 */
+.container[data-theme="light"] {
+  --bg-color: #f5f5f5;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-bg: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题变量 */
+.container[data-theme="dark"] {
+  --bg-color: #111823;
+  --card-bg: #1a2332;
+  --text-main: #ffffff;
+  --text-sub: #8b9bb4;
+  --accent-blue: #2b86ff;
+  --accent-orange: #ff6b35;
+  --accent-green: #00d26a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --hover-bg: rgba(255, 255, 255, 0.05);
+}
+
 .container {
   min-height: 100vh;
-  background-color: $bg-color;
-  color: $text-main;
+  background-color: var(--bg-color);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
 }
@@ -147,7 +181,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 10px 16px;
-  background-color: $bg-color;
+  background-color: var(--bg-color);
   z-index: 100;
 
   .nav-title {
@@ -157,7 +191,7 @@ export default {
 
   .icon {
     font-size: 20px;
-    color: $text-main;
+    color: var(--text-main);
     padding: 8px;
   }
 }
@@ -180,8 +214,8 @@ export default {
   }
 
   .tag {
-    background-color: rgba($accent-blue, 0.2);
-    color: $accent-blue;
+    background-color: rgba(43, 134, 255, 0.2);
+    color: var(--accent-blue);
     font-size: 10px;
     font-weight: 700;
     padding: 4px 8px;
@@ -191,10 +225,10 @@ export default {
 
   .counter {
     font-size: 14px;
-    color: $text-sub;
+    color: var(--text-sub);
 
     .highlight {
-      color: $text-main;
+      color: var(--text-main);
       font-weight: bold;
     }
   }
@@ -208,7 +242,7 @@ export default {
 
   .progress-bar-fill {
     height: 100%;
-    background-color: $accent-blue;
+    background-color: var(--accent-blue);
     border-radius: 3px;
     transition: width 0.3s ease;
   }
@@ -216,7 +250,7 @@ export default {
 
 /* Player Card */
 .player-card {
-  background-color: $card-bg;
+  background-color: var(--card-bg);
   border-radius: 20px;
   padding: 24px;
   display: flex;
@@ -232,7 +266,7 @@ export default {
     .icon-box {
       width: 48px;
       height: 48px;
-      background-color: rgba($accent-blue, 0.1);
+      background-color: rgba(43, 134, 255, 0.1);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -241,7 +275,7 @@ export default {
 
       .speaker-icon {
         font-size: 24px;
-        color: $accent-blue;
+        color: var(--accent-blue);
       }
     }
 
@@ -257,7 +291,7 @@ export default {
 
       .track-subtitle {
         font-size: 13px;
-        color: $text-sub;
+        color: var(--text-sub);
       }
     }
   }
@@ -272,7 +306,7 @@ export default {
 
     .bar {
       width: 4px;
-      background-color: $accent-blue;
+      background-color: var(--accent-blue);
       border-radius: 2px;
       opacity: 0.6;
     }
@@ -292,7 +326,7 @@ export default {
 
     .time-text {
       font-size: 12px;
-      color: $text-sub;
+      color: var(--text-sub);
     }
   }
 
@@ -319,13 +353,13 @@ export default {
         width: 70px;
         height: 70px;
         border-radius: 35px;
-        background-color: $accent-blue;
-        box-shadow: 0 4px 12px rgba($accent-blue, 0.4);
+        background-color: var(--accent-blue);
+        box-shadow: 0 4px 12px rgba(43, 134, 255, 0.4);
       }
 
       .control-icon {
         font-size: 18px;
-        color: $text-main;
+        color: var(--text-main);
         margin-bottom: 2px;
       }
 
@@ -336,7 +370,7 @@ export default {
 
       .control-label {
         font-size: 10px;
-        color: $text-sub;
+        color: var(--text-sub);
       }
     }
   }
@@ -351,7 +385,7 @@ export default {
 
   .input-label {
     font-size: 14px;
-    color: $text-main;
+    color: var(--text-main);
     margin-bottom: 12px;
     font-weight: 500;
   }
@@ -363,11 +397,11 @@ export default {
       width: 100%;
       height: 60px;
       background-color: transparent;
-      border: 2px solid $accent-blue;
+      border: 2px solid var(--accent-blue);
       border-radius: 12px;
       text-align: center;
       font-size: 24px;
-      color: $text-main;
+      color: var(--text-main);
       font-weight: bold;
     }
   }
@@ -398,7 +432,7 @@ export default {
   }
 
   .btn-primary {
-    background-color: $accent-blue;
+    background-color: var(--accent-blue);
     color: white;
   }
 
