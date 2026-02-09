@@ -1,12 +1,12 @@
 <script>
+import { loginAndAuth } from "@/service/auth";
+
 export default {
   onLaunch: function () {
     console.log("App Launch");
-
+    loginAndAuth();
     // 监听系统主题变化
     uni.onThemeChange((res) => {
-      console.log("全局主题变化:", res.theme);
-      // 通知所有页面系统主题已变更
       uni.$emit("systemThemeChange", res);
     });
   },
