@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
+import type { UserSettings, ThemeMode, NotificationSettings, QuestionCategory } from '@/typing/UserSettings';
 
 declare const uni: any;
 
 export const useUserStore = defineStore('user', {
   state: () => {
     // 从本地存储读取主题设置，默认为 auto（跟随系统）
-    const savedTheme = uni.getStorageSync("themeMode") || "auto";
+    const savedTheme = (uni.getStorageSync("themeMode") || "auto") as ThemeMode;
     const token = uni.getStorageSync("token") || "";
     const openid = uni.getStorageSync("openid") || "";
 
@@ -20,7 +21,7 @@ export const useUserStore = defineStore('user', {
         avatar: "https://api.dicebear.com/9.x/avataaars/png?seed=Alex&backgroundColor=ffdfbf",
       },
       settings: {
-        themeMode: savedTheme, // 'auto' | 'light' | 'dark'
+        themeMode: savedTheme,
         currentLanguage: "EN",
         questionsPerSession: 10,
         dailyGoal: 10,
@@ -40,7 +41,7 @@ export const useUserStore = defineStore('user', {
           "Quantity",
           "Percentage"
         ]
-      }
+      } as UserSettings
     };
   },
   actions: {
@@ -62,7 +63,7 @@ export const useUserStore = defineStore('user', {
     updateUserInfo(info: Partial<typeof this.userInfo>) {
       this.userInfo = { ...this.userInfo, ...info };
     },
-    setThemeMode(mode: 'auto' | 'light' | 'dark') {
+    setThemeMode(mode: ThemeMode) {
       this.settings.themeMode = mode;
       // 持久化存储主题设置
       uni.setStorageSync("themeMode", mode);
@@ -79,10 +80,10 @@ export const useUserStore = defineStore('user', {
     setDailyGoal(count: number) {
       this.settings.dailyGoal = count;
     },
-    updateNotificationSettings(settings: Partial<typeof this.settings.notification>) {
+    updateNotificationSettings(settings: Partial<NotificationSettings>) {
       this.settings.notification = { ...this.settings.notification, ...settings };
     },
-    updateQuestionTypes(types: string[]) {
+    updateQuestionTypes(types: QuestionCategory[]) {
       this.settings.questionTypes = types;
     },
     resetQuestionTypes() {
@@ -95,7 +96,7 @@ export const useUserStore = defineStore('user', {
         "Address",
         "Quantity",
         "Percentage"
-      ];
+      ] as QuestionCategory[];
     }
   },
 });
