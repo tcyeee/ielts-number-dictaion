@@ -24,7 +24,17 @@ export const useUserStore = defineStore('user', {
           weeklyProgress: true,
           newModules: true,
           practiceTime: "20:00",
-        }
+        },
+        questionTypes: [
+          "Date",
+          "Time",
+          "Phone",
+          "Price",
+          "Measurement",
+          "Address",
+          "Quantity",
+          "Percentage"
+        ]
       }
     };
   },
@@ -51,6 +61,21 @@ export const useUserStore = defineStore('user', {
     },
     updateNotificationSettings(settings: Partial<typeof this.settings.notification>) {
       this.settings.notification = { ...this.settings.notification, ...settings };
+    },
+    updateQuestionTypes(types: string[]) {
+      this.settings.questionTypes = types;
+    },
+    resetQuestionTypes() {
+      this.settings.questionTypes = [
+        "Date",
+        "Time",
+        "Phone",
+        "Price",
+        "Measurement",
+        "Address",
+        "Quantity",
+        "Percentage"
+      ];
     }
   },
 });

@@ -135,7 +135,6 @@ export default {
       navigateTo("profileQuestionsPerSession");
     },
     onDailyGoalClick() {
-      // Future feature
       uni.showToast({
         title: "Daily Goal settings coming soon",
         icon: "none",
