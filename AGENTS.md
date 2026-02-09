@@ -235,47 +235,50 @@ export default {
 
 ### 主题变量速查表
 
-**所有变量已在 App.vue 中全局定义，直接使用即可**：
+**修改配色时，仅需同步修改 `theme.json` 和 `App.vue` 两个文件。**
 
-```scss
-/* 页面和容器 */
-background-color: var(--bg-color);     // 页面背景
-background-color: var(--card-bg);      // 卡片背景
-background-color: var(--hover-bg);     // 悬停背景
-background-color: var(--mask-bg);      // 遮罩背景
+**1. 系统级 UI 配色 (`theme.json`)**
+控制导航栏、Tab栏、下拉刷新背景等原生组件颜色。
 
-/* 文字 */
-color: var(--text-main);               // 主要文字
-color: var(--text-sub);                // 次要文字
-
-/* 强调色 */
-color: var(--accent-blue);             // 蓝色（主色）
-color: var(--accent-orange);           // 橙色（警告）
-color: var(--accent-green);            // 绿色（成功）
-
-/* 边框 */
-border-color: var(--border-color);     // 边框颜色
-```
-
-### 修改全局主题颜色
-
-如需修改主题颜色，编辑 `/Users/tcyeee/Documents/Code/WeChatProjects/ielts-number-dictaion/App.vue`：
-
-```scss
-/* 浅色主题（默认） */
-page {
-  --bg-color: #f5f5f5;  /* 修改这里 */
-  /* ... */
-}
-
-/* 暗色主题 */
-@media (prefers-color-scheme: dark) {
-  page {
-    --bg-color: #111823;  /* 修改这里 */
-    /* ... */
+```json
+{
+  "light": {
+    "navBgColor": "#f5f5f5",
+    "bgColor": "#f5f5f5"
+  },
+  "dark": {
+    "navBgColor": "#111823",
+    "bgColor": "#111823"
   }
 }
 ```
+
+**2. 页面级 UI 配色 (`App.vue`)**
+控制页面内部文字、按钮、卡片等颜色。
+
+```scss
+/* 页面和容器 */
+--bg-color: #f5f5f5;           // 页面背景
+--card-bg: #ffffff;            // 卡片背景
+
+/* 文字 */
+--text-main: #1a1a1a;          // 主要文字
+--text-sub: #666666;           // 次要文字
+
+/* 强调色 */
+--accent-blue: #2b86ff;        // 蓝色（主色）
+```
+
+**3. SCSS 变量映射 (`uni.scss`)**
+**无需修改**。该文件已配置为自动引用 CSS 变量：
+`$bg-color: var(--bg-color);`
+
+### 修改全局主题颜色
+
+如需修改主题颜色，请遵循以下步骤：
+
+1.  **编辑 `theme.json`**: 修改系统原生组件颜色。
+2.  **编辑 `App.vue`**: 修改页面内部 CSS 变量值（同时修改 `page` 和 `@media (prefers-color-scheme: dark)` 下的变量）。
 
 ## 常见开发场景
 

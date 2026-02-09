@@ -95,7 +95,16 @@ ielts-number-dictaion/
 - `/stores/user.ts` - 管理用户主题偏好（`themeMode`）
 - `/mixins/themeMixin.js` - 全局主题 mixin，自动注入到所有页面
 - `/main.js` - 全局注册 themeMixin
-- `/uni.scss` - SCSS 变量定义（用于编译时常量，如尺寸、字体）
+- `/uni.scss` - SCSS 变量映射到 CSS 变量（无需修改）
+
+### 主题维护指南
+
+修改配色时，只需修改以下两个文件：
+
+1. **`theme.json`**：控制原生导航栏、Tab栏等系统级 UI 颜色。
+2. **`App.vue`**：控制页面内部组件的 CSS 变量值。
+
+**注意**：`uni.scss` 已配置为引用 CSS 变量（如 `$bg-color: var(--bg-color)`），因此无需手动修改 SCSS 变量。
 
 ### 全局 CSS 变量定义（App.vue）
 
