@@ -21,124 +21,40 @@
       <!-- Settings Group 1 -->
       <view class="menu-group">
         <!-- Notification Settings -->
-        <view class="menu-item" @click="onNotificationClick">
-          <view class="item-left">
-            <view class="icon-box purple">
-              <!-- Bell Icon - Purple -->
-              <view class="icon--feather--bell" style="width: 40rpx; height: 40rpx; color: #9d65ff;"></view>
-            </view>
-            <text class="item-text">Notifications</text>
-          </view>
-          <text class="arrow">›</text>
-        </view>
-
+        <profile-menu-item title="Notifications" icon="icon--feather--bell" icon-color="#9d65ff" icon-bg-class="purple" @click="onNotificationClick" />
         <!-- Daily Practice Goal -->
-        <view class="menu-item" @click="onDailyGoalClick">
-          <view class="item-left">
-            <view class="icon-box red">
-              <!-- Target Icon - Red/Pink -->
-              <view class="icon--feather--target" style="width: 40rpx; height: 40rpx; color: #ff5252;"></view>
-            </view>
-            <text class="item-text">Daily Practice Goal</text>
-          </view>
-          <view class="item-right">
-            <text class="value-text">{{ dailyGoal }}</text>
-            <text class="arrow">›</text>
-          </view>
-        </view>
-
+        <profile-menu-item title="Daily Practice Goal" icon="icon--feather--target" icon-color="#ff5252" icon-bg-class="red" :value="dailyGoal" @click="onDailyGoalClick" />
         <!-- Question Preferences -->
-        <view class="menu-item" @click="onQuestionPreferencesClick">
-          <view class="item-left">
-            <view class="icon-box teal">
-              <!-- Sliders Icon - Teal -->
-              <view class="icon--feather--sliders" style="width: 40rpx; height: 40rpx; color: #00BFA5;"></view>
-            </view>
-            <text class="item-text">Question Preferences</text>
-          </view>
-          <text class="arrow">›</text>
-        </view>
-
+        <profile-menu-item title="Question Preferences" icon="icon--feather--sliders" icon-color="#00BFA5" icon-bg-class="teal" @click="onQuestionPreferencesClick" />
         <!-- Questions Per Session -->
-        <view class="menu-item" @click="onQuestionsPerSessionClick">
-          <view class="item-left">
-            <view class="icon-box blue">
-              <!-- List Icon - Blue -->
-              <view class="icon--feather--list" style="width: 40rpx; height: 40rpx; color: #2b86ff;"></view>
-            </view>
-            <text class="item-text">Questions Per Session</text>
-          </view>
-          <view class="item-right">
-            <text class="value-text">{{ questionsPerSession }}</text>
-            <text class="arrow">›</text>
-          </view>
-        </view>
+        <profile-menu-item title="Questions Per Session" icon="icon--feather--list" icon-color="#2b86ff" icon-bg-class="blue" :value="questionsPerSession" @click="onQuestionsPerSessionClick" />
       </view>
 
       <!-- Settings Group 2 -->
       <view class="menu-group">
         <!-- App Language -->
-        <view class="menu-item">
-          <view class="item-left">
-            <view class="icon-box green">
-              <!-- Globe Icon - Green -->
-              <view class="icon--feather--globe" style="width: 40rpx; height: 40rpx; color: #00d26a;"></view>
-            </view>
-            <text class="item-text">App Language</text>
-          </view>
-          <segment-control :model-value="currentLanguage" :options="languageOptions" @update:model-value="setLanguage" />
-        </view>
+        <profile-menu-item title="App Language" icon="icon--feather--globe" icon-color="#00d26a" icon-bg-class="green" :show-arrow="false">
+          <template #right>
+            <segment-control :model-value="currentLanguage" :options="languageOptions" @update:model-value="setLanguage" />
+          </template>
+        </profile-menu-item>
 
         <!-- Theme -->
-        <view class="menu-item theme-setting">
-          <view class="item-left">
-            <view class="icon-box yellow">
-              <!-- Sun Icon - Orange/Yellow -->
-              <view class="icon--feather--sun" style="width: 40rpx; height: 40rpx; color: #ffb300;"></view>
-            </view>
-            <text class="item-text">Theme</text>
-          </view>
-          <segment-control :model-value="currentThemeMode" :options="themeOptions" @update:model-value="setTheme" />
-        </view>
+        <profile-menu-item title="Theme" icon="icon--feather--sun" icon-color="#ffb300" icon-bg-class="yellow" :show-arrow="false">
+          <template #right>
+            <segment-control :model-value="currentThemeMode" :options="themeOptions" @update:model-value="setTheme" />
+          </template>
+        </profile-menu-item>
       </view>
 
       <!-- Support Group -->
       <view class="menu-group">
         <!-- Privacy Policy -->
-        <view class="menu-item" @click="onPrivacyClick">
-          <view class="item-left">
-            <view class="icon-box orange">
-              <!-- Shield Icon - Orange -->
-              <view class="icon--feather--shield" style="width: 40rpx; height: 40rpx; color: #ff6b35;"></view>
-            </view>
-            <text class="item-text">Privacy Policy</text>
-          </view>
-          <text class="arrow">›</text>
-        </view>
-
+        <profile-menu-item title="Privacy Policy" icon="icon--feather--shield" icon-color="#ff6b35" icon-bg-class="orange" @click="onPrivacyClick" />
         <!-- Terms of Service -->
-        <view class="menu-item" @click="onTermsClick">
-          <view class="item-left">
-            <view class="icon-box teal">
-              <!-- File Text Icon - Teal -->
-              <view class="icon--feather--file-text" style="width: 40rpx; height: 40rpx; color: #00BFA5;"></view>
-            </view>
-            <text class="item-text">Terms of Service</text>
-          </view>
-          <text class="arrow">›</text>
-        </view>
-
+        <profile-menu-item title="Terms of Service" icon="icon--feather--file-text" icon-color="#00BFA5" icon-bg-class="teal" @click="onTermsClick" />
         <!-- Contact Us -->
-        <button class="menu-item contact-btn" open-type="contact">
-          <view class="item-left">
-            <view class="icon-box blue">
-              <!-- Message Icon - Blue -->
-              <view class="icon--feather--message-square" style="width: 40rpx; height: 40rpx; color: #2b86ff;"></view>
-            </view>
-            <text class="item-text">Contact Us</text>
-          </view>
-          <text class="arrow">›</text>
-        </button>
+        <profile-menu-item title="Contact Us" icon="icon--feather--message-square" icon-color="#2b86ff" icon-bg-class="blue" open-type="contact" />
       </view>
 
     </view>
@@ -148,6 +64,7 @@
 <script>
 import SafeAreaTop from "@/components/safe-area/safe-area-top.vue";
 import SegmentControl from "@/components/profile/segment-control.vue";
+import ProfileMenuItem from "@/components/profile/profile-menu-item.vue";
 import { navigateTo } from "@/utils/router";
 import { mapState, mapActions } from "pinia";
 import { useUserStore } from "@/stores/user";
@@ -158,6 +75,7 @@ export default {
   components: {
     SafeAreaTop,
     SegmentControl,
+    ProfileMenuItem,
   },
 
   data() {
@@ -307,132 +225,5 @@ export default {
   margin-bottom: 30rpx;
   border: 1px solid var(--border-color);
   overflow: hidden;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 32rpx 32rpx;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:active {
-    background-color: var(--hover-bg);
-  }
-}
-
-.item-left {
-  display: flex;
-  align-items: center;
-}
-
-.icon-box {
-  width: 72rpx;
-  height: 72rpx;
-  border-radius: 20rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 24rpx;
-
-  &.purple {
-    background-color: rgba(157, 101, 255, 0.1);
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(62, 45, 107, 0.4);
-    }
-  }
-
-  &.red {
-    background-color: rgba(255, 82, 82, 0.1);
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(62, 28, 40, 0.4);
-    }
-  }
-
-  &.teal {
-    background-color: rgba(0, 191, 165, 0.1);
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(22, 54, 50, 0.4);
-    }
-  }
-
-  &.blue {
-    background-color: rgba(43, 134, 255, 0.1);
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(26, 44, 66, 0.4);
-    }
-  }
-
-  &.green {
-    background-color: rgba(0, 210, 106, 0.1);
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(22, 54, 30, 0.4);
-    }
-  }
-
-  &.yellow {
-    background-color: rgba(255, 179, 0, 0.1);
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(66, 49, 10, 0.4);
-    }
-  }
-
-  &.orange {
-    background-color: rgba(255, 107, 53, 0.1);
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(66, 30, 15, 0.4);
-    }
-  }
-
-  &.grey {
-    background-color: rgba(139, 155, 180, 0.1);
-    @media (prefers-color-scheme: dark) {
-      background-color: rgba(45, 50, 60, 0.4);
-    }
-  }
-}
-
-.item-text {
-  font-size: 30rpx;
-  color: var(--text-main);
-  font-weight: 500;
-}
-
-.item-right {
-  display: flex;
-  align-items: center;
-}
-
-.value-text {
-  font-size: 28rpx;
-  color: var(--accent-blue);
-  font-weight: 600;
-  margin-right: 12rpx;
-}
-
-.arrow {
-  font-size: 32rpx;
-  color: var(--text-sub);
-  font-weight: 400;
-  opacity: 0.5;
-}
-
-.contact-btn {
-  background-color: transparent;
-  line-height: inherit;
-  border-radius: 0;
-  border: none;
-  margin: 0;
-  text-align: left;
-  font-size: inherit;
-  color: inherit;
-
-  &::after {
-    border: none;
-  }
 }
 </style>
