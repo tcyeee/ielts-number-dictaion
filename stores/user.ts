@@ -6,8 +6,13 @@ export const useUserStore = defineStore('user', {
   state: () => {
     // 从本地存储读取主题设置，默认为 auto（跟随系统）
     const savedTheme = uni.getStorageSync("themeMode") || "auto";
+    const token = uni.getStorageSync("token") || "";
+    const openid = uni.getStorageSync("openid") || "";
 
     return {
+      token,
+      openid,
+      loading: false,
       userInfo: {
         name: "Alex",
         level: 12,
@@ -39,6 +44,21 @@ export const useUserStore = defineStore('user', {
     };
   },
   actions: {
+    setLoading() {
+      this.loading = true;
+    },
+    setLogin(token: string, openid: string) {
+      this.token = token;
+      this.openid = openid;
+      this.loading = false;
+      uni.setStorageSync("token", token);
+      uni.setStorageSync("openid", openid);
+    },
+    setFailed() {
+      this.loading = false;
+      this.token = "";
+      this.openid = "";
+    },
     updateUserInfo(info: Partial<typeof this.userInfo>) {
       this.userInfo = { ...this.userInfo, ...info };
     },
