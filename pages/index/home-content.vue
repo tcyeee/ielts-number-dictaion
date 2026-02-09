@@ -13,73 +13,38 @@
     </view>
 
     <!-- Progress Section -->
-    <view class="section">
-      <text class="section-title">Your Progress</text>
-      <view class="progress-cards">
-        <!-- Accuracy Card -->
-        <view class="card progress-card" hover-class="card-hover">
-          <circular-progress :percentage="85" color="#2b86ff" label="85%" />
-          <text class="card-label">Accuracy</text>
-          <text class="card-subtext success">+5% today</text>
-        </view>
+    <view class="progress-section">
+      <!-- Accuracy Card -->
+      <view class="progress-card">
+        <circular-progress :percentage="85" color="#2b86ff" label="85%" :size="140" />
+        <text class="card-label">ACCURACY</text>
+      </view>
 
-        <!-- Daily Goal Card -->
-        <view class="card progress-card" hover-class="card-hover">
-          <circular-progress :percentage="60" color="#ff6b35" label="12/20" />
-          <text class="card-label">Daily Goal</text>
-          <text class="card-subtext">8 remaining</text>
-        </view>
+      <!-- Daily Goal Card -->
+      <view class="progress-card">
+        <circular-progress :percentage="60" color="#9d65ff" label="12/20" :size="140" />
+        <text class="card-label">DAILY GOAL</text>
       </view>
     </view>
 
-    <!-- Training Modules Section -->
-    <view class="section">
-      <text class="section-title" @click="toCategory">Training Modules</text>
-      <view class="modules-list">
-        <!-- Mixed Mode Card -->
-        <view class="card mixed-card" @click="toCategory">
-          <view class="mixed-header">
-            <view class="module-icon-box mixed-icon-box">
-              <text class="module-icon icon--streamline-plump--street-sign-remix" />
-            </view>
-            <view class="mixed-info">
-              <view class="mixed-title-row">
-                <text class="mixed-title">{{mixedMode.title}}</text>
-                <view class="mixed-tag">
-                  <text class="mixed-tag-text">{{mixedMode.tag}}</text>
-                </view>
-              </view>
-              <text class="mixed-sub">{{mixedMode.sub}}</text>
-            </view>
-          </view>
-
-          <view class="mixed-progress-section">
-            <view class="progress-labels">
-              <text class="progress-label">Overall Mastery</text>
-              <text class="progress-value">{{mixedMode.progress}}%</text>
-            </view>
-            <view class="progress-bar-bg mixed-bar-bg">
-              <view class="progress-bar-fill mixed-bar-fill" :style="{width: mixedMode.progress + '%'}"></view>
-            </view>
-          </view>
-        </view>
-
-        <!-- Other Modules -->
-        <view class="card module-list-item" v-for="(item, index) in modules" :key="index" hover-class="card-hover">
-          <view class="module-icon-box list-icon-box">
-            <view :class="['module-icon icon-size-32', item.icon]"></view>
-          </view>
-          <view class="module-content">
-            <view class="module-header">
-              <text class="module-title">{{item.title}}</text>
-              <text class="module-percent">{{item.progress}}%</text>
-            </view>
-            <view class="progress-bar-bg">
-              <view class="progress-bar-fill" :style="{width: item.progress + '%'}"></view>
-            </view>
-          </view>
-        </view>
+    <!-- Action Section -->
+    <view class="action-section">
+      <!-- Start Button -->
+      <view class="start-btn" hover-class="btn-hover" @click="startPractice">
+        <text class="start-text">▶ START</text>
       </view>
+
+      <!-- Adaptive Mix Button -->
+      <view class="adaptive-btn" hover-class="btn-hover" @click="toggleMode">
+        <view class="icon--feather--zap icon-size-16 adaptive-icon"></view>
+        <text class="adaptive-text">ADAPTIVE MIX: 10 QUESTIONS</text>
+      </view>
+
+      <!-- Description -->
+      <text class="description-text">
+        Automatically balanced categories based
+        on your recent performance.
+      </text>
     </view>
   </view>
 
@@ -94,8 +59,10 @@ import CircularProgress from "@/components/circular-progress/circular-progress.v
 import { navigateTo } from "@/utils/router";
 import { mapState } from "pinia";
 import { useUserStore } from "@/stores/user";
+import themeMixin from "@/mixins/themeMixin.js";
 
 export default {
+  mixins: [themeMixin],
   components: {
     SafeArea,
     SafeAreaBottom,
@@ -103,47 +70,28 @@ export default {
   },
   data() {
     return {
-      mixedMode: {
-        title: "Mixed Mode",
-        tag: "ALL CATEGORIES",
-        sub: "Phones, Dates, Prices & Addresses",
-        progress: 62,
-      },
-      modules: [
-        {
-          title: "Phone Numbers",
-          sub: "Master digit groups",
-          icon: "icon--f7--phone",
-          progress: 70,
-        },
-        {
-          title: "Dates & Times",
-          sub: "Months & years",
-          icon: "icon--fluent--calendar-date-24-regular",
-          progress: 45,
-        },
-        {
-          title: "Prices",
-          sub: "Currencies & decimals",
-          icon: "icon--bx--dollar-circle",
-          progress: 80,
-        },
-        {
-          title: "Addresses",
-          sub: "Postal codes & streets",
-          icon: "icon--mynaui--map-pinned",
-          progress: 30,
-        },
-      ],
+      // Data for progress can be dynamic in future
     };
   },
   computed: {
     ...mapState(useUserStore, ["settings"]),
   },
-  onLoad() {},
   methods: {
-    toCategory() {
+    toSettings() {
+      // Navigate to profile tab or settings page
+      uni.switchTab({ url: "/pages/index/profile" }).catch(() => {
+        navigateTo("profile");
+      });
+    },
+    startPractice() {
       navigateTo("dictation");
+    },
+    toggleMode() {
+      // Toggle mode logic or show settings
+      uni.showToast({
+        title: "Mode Settings",
+        icon: "none",
+      });
     },
   },
 };
@@ -152,9 +100,10 @@ export default {
 <style lang="scss" scoped>
 .container {
   padding: 40rpx;
-  padding-bottom: 180rpx;
   background-color: var(--bg-color);
-  min-height: 100vh;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header */
@@ -162,7 +111,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 50rpx;
+  margin-bottom: 60rpx;
   margin-top: 20rpx;
 }
 
@@ -172,8 +121,8 @@ export default {
 }
 
 .avatar {
-  width: 100rpx;
-  height: 100rpx;
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 50%;
   margin-right: 24rpx;
   border: 2rpx solid var(--accent-blue);
@@ -186,306 +135,116 @@ export default {
 
 .app-name {
   color: var(--text-main);
-  font-size: 36rpx;
+  font-size: 32rpx;
   font-weight: bold;
 }
 
 .greeting {
   color: var(--text-sub);
-  font-size: 28rpx;
+  font-size: 24rpx;
   margin-top: 4rpx;
 }
 
-.notification-btn {
+.settings-btn {
   width: 80rpx;
   height: 80rpx;
-  background-color: var(--card-bg);
-  border-radius: 20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--text-sub);
 }
 
-/* Common Section */
-.section {
-  margin-bottom: 50rpx;
+/* Progress Section */
+.progress-section {
+  display: flex;
+  justify-content: space-between;
+  gap: 30rpx;
+  margin-bottom: auto; /* Push content below to bottom */
 }
 
-.section-title {
-  color: var(--text-main);
-  font-size: 34rpx;
-  font-weight: bold;
-  margin-bottom: 30rpx;
-  display: block;
-}
-
-.card {
+.progress-card {
+  flex: 1;
   background-color: var(--card-bg);
-  border-radius: 30rpx;
-  padding: 30rpx;
-  transition: all 0.2s ease;
+  border-radius: 40rpx;
+  padding: 60rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1rpx solid var(--border-color);
 }
 
-.card-hover {
+.card-label {
+  color: var(--text-sub);
+  font-size: 24rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+  margin-top: 30rpx;
+  text-transform: uppercase;
+}
+
+/* Action Section */
+.action-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100rpx;
+  width: 100%;
+}
+
+.start-btn {
+  width: 80%;
+  height: 120rpx;
+  background: linear-gradient(90deg, #2b86ff 0%, #9d65ff 100%);
+  border-radius: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40rpx;
+  box-shadow: 0 10rpx 30rpx rgba(43, 134, 255, 0.3);
+  transition: transform 0.2s;
+}
+
+.btn-hover {
   transform: scale(0.98);
   opacity: 0.9;
 }
 
-/* Progress Cards */
-.progress-cards {
-  display: flex;
-  justify-content: space-between;
-}
-
-.progress-card {
-  width: 47%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40rpx 20rpx;
-  box-sizing: border-box;
-}
-
-.card-label {
-  color: var(--text-main);
-  font-size: 30rpx;
-  font-weight: 500;
-  margin-bottom: 8rpx;
-}
-
-.card-subtext {
-  font-size: 24rpx;
-  color: var(--text-sub);
-}
-
-.success {
-  color: var(--accent-green);
-}
-/* Modules List */
-.modules-list {
-  display: flex;
-  flex-direction: column;
-  gap: 30rpx;
-}
-
-/* Mixed Mode Card */
-.mixed-card {
-  background: linear-gradient(145deg, #2b1f3d 0%, #1e1e2e 100%);
-  border: 2rpx solid #4a3b69;
-  padding: 36rpx;
-  position: relative;
-  overflow: hidden;
-}
-
-.mixed-header {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 40rpx;
-}
-
-.mixed-icon-box {
-  width: 100rpx;
-  height: 100rpx;
-  background: linear-gradient(135deg, #8a4fff 0%, #5e35b1 100%);
-  border-radius: 24rpx;
-  margin-right: 30rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: 0 4rpx 12rpx rgba(138, 79, 255, 0.3);
-}
-
-.mixed-info {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100rpx;
-}
-
-.mixed-title-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12rpx;
-}
-
-.mixed-title {
-  color: #fff;
+.start-text {
+  color: white;
   font-size: 36rpx;
   font-weight: bold;
-  margin-right: 20rpx;
+  letter-spacing: 4rpx;
 }
 
-.mixed-tag {
-  background-color: rgba(138, 79, 255, 0.2);
-  padding: 6rpx 16rpx;
-  border-radius: 8rpx;
-  border: 1rpx solid rgba(138, 79, 255, 0.4);
-}
-
-.mixed-tag-text {
-  color: #a77dff;
-  font-size: 20rpx;
-  font-weight: bold;
-  letter-spacing: 1rpx;
-}
-
-.mixed-sub {
-  color: #9ca3af;
-  font-size: 26rpx;
-}
-
-.progress-labels {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16rpx;
-}
-
-.progress-label {
-  color: #9ca3af;
-  font-size: 26rpx;
-  font-weight: 500;
-}
-
-.progress-value {
-  color: #fff;
-  font-size: 26rpx;
-  font-weight: bold;
-}
-
-.mixed-bar-bg {
-  height: 16rpx;
-  background-color: #2e2440;
-  border-radius: 8rpx;
-}
-
-.mixed-bar-fill {
-  background: linear-gradient(90deg, #8a4fff 0%, #d500f9 100%);
-  border-radius: 8rpx;
-  height: 100%;
-}
-
-/* List Items */
-.module-list-item {
+.adaptive-btn {
+  background-color: var(--card-bg);
+  padding: 20rpx 40rpx;
+  border-radius: 40rpx;
   display: flex;
   align-items: center;
-  padding: 36rpx;
+  margin-bottom: 30rpx;
   border: 1rpx solid var(--border-color);
 }
 
-.list-icon-box {
-  width: 90rpx;
-  height: 90rpx;
-  background-color: var(--bg-color);
-  border-radius: 24rpx;
-  margin-right: 30rpx;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1rpx solid var(--border-color);
+.adaptive-icon {
+  color: #9d65ff;
+  margin-right: 16rpx;
 }
 
-.module-content {
-  flex: 1;
-}
-
-.module-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16rpx;
-  align-items: center;
-}
-
-.module-title {
+.adaptive-text {
   color: var(--text-main);
-  font-size: 32rpx;
-  font-weight: bold;
-}
-
-.module-percent {
-  color: var(--text-main);
-  font-size: 32rpx;
-  font-weight: bold;
-}
-
-.module-icon {
-  color: var(--accent-blue);
-}
-
-.mixed-icon-box .module-icon {
-  color: #fff;
-}
-
-.progress-bar-bg {
-  width: 100%;
-  height: 12rpx;
-  background-color: var(--hover-bg);
-  border-radius: 6rpx;
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background-color: var(--accent-blue);
-  border-radius: 4rpx;
-}
-
-/* Streak Section */
-.streak-card {
-  background-color: #151e2c; /* Slightly darker/different shade */
-  border-radius: 30rpx;
-  padding: 40rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: 1px solid #253145;
-  margin-bottom: 60rpx;
-}
-
-.streak-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.streak-label {
-  color: var(--accent-blue);
   font-size: 24rpx;
   font-weight: bold;
   letter-spacing: 2rpx;
-  margin-bottom: 10rpx;
   text-transform: uppercase;
 }
 
-.streak-days {
-  color: var(--text-main);
-  font-size: 48rpx;
-  font-weight: bold;
-}
-
-.streak-indicators {
-  display: flex;
-  gap: 16rpx;
-}
-
-.streak-circle {
-  width: 60rpx;
-  height: 60rpx;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28rpx;
-}
-
-.checked {
-  background-color: var(--accent-blue);
-  color: white;
-}
-
-.locked {
-  background-color: var(--card-bg);
+.description-text {
   color: var(--text-sub);
+  font-size: 24rpx;
+  text-align: center;
+  line-height: 1.5;
+  max-width: 80%;
 }
 </style>
