@@ -163,7 +163,7 @@ export default {
     align-items: center;
     gap: 12rpx;
     padding: 12rpx 24rpx;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--hover-bg);
     border: 1px solid var(--border-color);
     border-radius: 100rpx;
 
@@ -238,7 +238,4 @@ export default {
     }
   }
 }
-
-/* Dark mode overrides if needed specifically for this page to match design strictly */
-/* However, using vars ensures it adapts. The design is dark, so let's verify vars */
 </style>

@@ -23,7 +23,7 @@
         <!-- Notification Settings -->
         <view class="menu-item" @click="onNotificationClick">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(62, 45, 107, 0.4)">
+            <view class="icon-box purple">
               <!-- Bell Icon - Purple -->
               <view class="icon--feather--bell" style="width: 40rpx; height: 40rpx; color: #9d65ff;"></view>
             </view>
@@ -35,7 +35,7 @@
         <!-- Daily Practice Goal -->
         <view class="menu-item" @click="onDailyGoalClick">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(62, 28, 40, 0.4)">
+            <view class="icon-box red">
               <!-- Target Icon - Red/Pink -->
               <view class="icon--feather--target" style="width: 40rpx; height: 40rpx; color: #ff5252;"></view>
             </view>
@@ -50,7 +50,7 @@
         <!-- Question Preferences -->
         <view class="menu-item" @click="onQuestionPreferencesClick">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(22, 54, 50, 0.4)">
+            <view class="icon-box teal">
               <!-- Sliders Icon - Teal -->
               <view class="icon--feather--sliders" style="width: 40rpx; height: 40rpx; color: #00BFA5;"></view>
             </view>
@@ -62,7 +62,7 @@
         <!-- Questions Per Session -->
         <view class="menu-item" @click="onQuestionsPerSessionClick">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(26, 44, 66, 0.4)">
+            <view class="icon-box blue">
               <!-- List Icon - Blue -->
               <view class="icon--feather--list" style="width: 40rpx; height: 40rpx; color: #2b86ff;"></view>
             </view>
@@ -80,38 +80,25 @@
         <!-- App Language -->
         <view class="menu-item">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(22, 54, 30, 0.4)">
+            <view class="icon-box green">
               <!-- Globe Icon - Green -->
               <view class="icon--feather--globe" style="width: 40rpx; height: 40rpx; color: #00d26a;"></view>
             </view>
             <text class="item-text">App Language</text>
           </view>
-          <view class="segment-control">
-            <view class="segment-option" :class="{ active: currentLanguage === 'EN' }" @click="setLanguage('EN')">EN</view>
-            <view class="segment-option" :class="{ active: currentLanguage === 'CN' }" @click="setLanguage('CN')">CN</view>
-          </view>
+          <segment-control :model-value="currentLanguage" :options="languageOptions" @update:model-value="setLanguage" />
         </view>
 
         <!-- Theme -->
         <view class="menu-item theme-setting">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(66, 49, 10, 0.4)">
+            <view class="icon-box yellow">
               <!-- Sun Icon - Orange/Yellow -->
               <view class="icon--feather--sun" style="width: 40rpx; height: 40rpx; color: #ffb300;"></view>
             </view>
             <text class="item-text">Theme</text>
           </view>
-          <view class="theme-control">
-            <view class="theme-option" :class="{ active: currentThemeMode === 'auto' }" @click="setTheme('auto')">
-              AUTO
-            </view>
-            <view class="theme-option" :class="{ active: currentThemeMode === 'light' }" @click="setTheme('light')">
-              LIGHT
-            </view>
-            <view class="theme-option" :class="{ active: currentThemeMode === 'dark' }" @click="setTheme('dark')">
-              DARK
-            </view>
-          </view>
+          <segment-control :model-value="currentThemeMode" :options="themeOptions" @update:model-value="setTheme" />
         </view>
       </view>
 
@@ -120,7 +107,7 @@
         <!-- Privacy Policy -->
         <view class="menu-item" @click="onPrivacyClick">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(66, 30, 15, 0.4)">
+            <view class="icon-box orange">
               <!-- Shield Icon - Orange -->
               <view class="icon--feather--shield" style="width: 40rpx; height: 40rpx; color: #ff6b35;"></view>
             </view>
@@ -132,7 +119,7 @@
         <!-- Terms of Service -->
         <view class="menu-item" @click="onTermsClick">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(22, 50, 45, 0.4)">
+            <view class="icon-box teal">
               <!-- File Text Icon - Teal -->
               <view class="icon--feather--file-text" style="width: 40rpx; height: 40rpx; color: #00BFA5;"></view>
             </view>
@@ -144,7 +131,7 @@
         <!-- Contact Us -->
         <button class="menu-item contact-btn" open-type="contact">
           <view class="item-left">
-            <view class="icon-box" style="background-color: rgba(45, 50, 60, 0.4)">
+            <view class="icon-box grey">
               <!-- Info Icon - Grey -->
               <view class="icon--feather--info" style="width: 40rpx; height: 40rpx; color: #8b9bb4;"></view>
             </view>
@@ -160,6 +147,7 @@
 
 <script>
 import SafeAreaTop from "@/components/safe-area/safe-area-top.vue";
+import SegmentControl from "@/components/profile/segment-control.vue";
 import { navigateTo } from "@/utils/router";
 import { mapState, mapActions } from "pinia";
 import { useUserStore } from "@/stores/user";
@@ -169,6 +157,21 @@ export default {
   mixins: [themeMixin],
   components: {
     SafeAreaTop,
+    SegmentControl,
+  },
+
+  data() {
+    return {
+      languageOptions: [
+        { label: "EN", value: "EN" },
+        { label: "CN", value: "CN" },
+      ],
+      themeOptions: [
+        { label: "AUTO", value: "auto" },
+        { label: "LIGHT", value: "light" },
+        { label: "DARK", value: "dark" },
+      ],
+    };
   },
 
   computed: {
@@ -335,6 +338,62 @@ export default {
   align-items: center;
   justify-content: center;
   margin-right: 24rpx;
+
+  &.purple {
+    background-color: rgba(157, 101, 255, 0.1);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(62, 45, 107, 0.4);
+    }
+  }
+
+  &.red {
+    background-color: rgba(255, 82, 82, 0.1);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(62, 28, 40, 0.4);
+    }
+  }
+
+  &.teal {
+    background-color: rgba(0, 191, 165, 0.1);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(22, 54, 50, 0.4);
+    }
+  }
+
+  &.blue {
+    background-color: rgba(43, 134, 255, 0.1);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(26, 44, 66, 0.4);
+    }
+  }
+
+  &.green {
+    background-color: rgba(0, 210, 106, 0.1);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(22, 54, 30, 0.4);
+    }
+  }
+
+  &.yellow {
+    background-color: rgba(255, 179, 0, 0.1);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(66, 49, 10, 0.4);
+    }
+  }
+
+  &.orange {
+    background-color: rgba(255, 107, 53, 0.1);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(66, 30, 15, 0.4);
+    }
+  }
+
+  &.grey {
+    background-color: rgba(139, 155, 180, 0.1);
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(45, 50, 60, 0.4);
+    }
+  }
 }
 
 .item-text {
@@ -362,55 +421,6 @@ export default {
   opacity: 0.5;
 }
 
-/* Segment Control */
-.segment-control {
-  display: flex;
-  background-color: var(--hover-bg); // fallback if variable not set
-  background: rgba(0, 0, 0, 0.2); // darker background for toggle track
-  border-radius: 8rpx;
-  padding: 4rpx;
-}
-
-.segment-option {
-  padding: 8rpx 20rpx;
-  font-size: 24rpx;
-  color: var(--text-sub);
-  border-radius: 6rpx;
-  font-weight: 600;
-  transition: all 0.2s;
-
-  &.active {
-    background-color: var(--accent-blue);
-    color: #ffffff;
-  }
-}
-
-/* Theme Control */
-.theme-control {
-  display: flex;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 8rpx;
-  padding: 4rpx;
-  gap: 2rpx;
-}
-
-.theme-option {
-  padding: 8rpx 16rpx;
-  font-size: 20rpx;
-  color: var(--text-sub);
-  border-radius: 6rpx;
-  font-weight: 700;
-  text-align: center;
-  transition: all 0.2s;
-  cursor: pointer;
-  text-transform: uppercase;
-
-  &.active {
-    background-color: var(--accent-blue);
-    color: #ffffff;
-  }
-}
-
 .contact-btn {
   background-color: transparent;
   line-height: inherit;
@@ -423,14 +433,6 @@ export default {
 
   &::after {
     border: none;
-  }
-}
-
-/* Dark mode adjustments for icon backgrounds to match design */
-@media (prefers-color-scheme: dark) {
-  .segment-control,
-  .theme-control {
-    background: rgba(0, 0, 0, 0.3);
   }
 }
 </style>
