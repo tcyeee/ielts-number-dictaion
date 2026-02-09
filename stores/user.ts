@@ -16,6 +16,7 @@ export const useUserStore = defineStore('user', {
         themeMode: savedTheme, // 'auto' | 'light' | 'dark'
         currentLanguage: "EN",
         questionsPerSession: 10,
+        dailyGoal: 10,
         notification: {
           dailyReminder: true,
           weeklyProgress: true,
@@ -42,6 +43,9 @@ export const useUserStore = defineStore('user', {
     },
     setQuestionsPerSession(count: number) {
       this.settings.questionsPerSession = count;
+    },
+    setDailyGoal(count: number) {
+      this.settings.dailyGoal = count;
     },
     updateNotificationSettings(settings: Partial<typeof this.settings.notification>) {
       this.settings.notification = { ...this.settings.notification, ...settings };

@@ -6,8 +6,8 @@ export const ROUTES = {
   result: '/pages/result',
   history: '/pages/history',
   profileAvatar: '/pages/profile/avatar',
-  profilePrivacy: '/pages/profile/privacy',
-  profileTerms: '/pages/profile/terms',
+  profilePrivacy: '/pages/terms/privacy',
+  profileTerms: '/pages/terms/terms',
   profileNotification: '/pages/profile/notification',
   profileQuestionsPerSession: '/pages/profile/questions-per-session',
 } as const

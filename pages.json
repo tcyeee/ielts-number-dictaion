@@ -5,8 +5,8 @@
 		{"path": "pages/dictation","style": { "navigationStyle": "custom", "navigationBarTitleText": "听写" }},
 		{"path": "pages/result","style": { "navigationStyle": "custom", "navigationBarTitleText": "结果" }},
 		{"path": "pages/profile/avatar","style": { "navigationStyle": "custom", "navigationBarTitleText": "Edit Profile" }},
-		{"path": "pages/profile/privacy","style": { "navigationStyle": "custom", "navigationBarTitleText": "Privacy Policy" }},
-		{"path": "pages/profile/terms","style": { "navigationStyle": "custom", "navigationBarTitleText": "Terms of Service" }},
+		{"path": "pages/terms/privacy","style": { "navigationStyle": "custom", "navigationBarTitleText": "Privacy Policy" }},
+		{"path": "pages/terms/terms","style": { "navigationStyle": "custom", "navigationBarTitleText": "Terms of Service" }},
 		{"path": "pages/profile/notification","style": { "navigationStyle": "custom", "navigationBarTitleText": "Notification Settings" }},
 		{"path": "pages/profile/questions-per-session","style": { "navigationStyle": "custom", "navigationBarTitleText": "Questions Per Session" }}
 	],
