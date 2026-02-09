@@ -65,15 +65,15 @@ export default {
   align-items: center;
   box-shadow: var(--nav-shadow);
   z-index: 100;
-  padding: 0 10rpx;
+  padding: 0 12rpx;
 }
 
 .nav-slider {
   position: absolute;
-  left: 10rpx;
+  left: 12rpx;
   top: 50%;
   transform: translateX(0);
-  width: calc(100% / 3 - 20rpx / 3);
+  width: calc(100% / 3 - 24rpx / 3);
   height: 96rpx;
   margin-top: -48rpx;
   background-color: $accent-blue;
