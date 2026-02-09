@@ -73,6 +73,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+page {
+  background-color: $bg-color;
+}
+
 .container {
   min-height: 100vh;
   background-color: $bg-color;

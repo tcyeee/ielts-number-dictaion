@@ -56,6 +56,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+page {
+  background-color: $bg-color;
+}
+
 .container {
   min-height: 100vh;
   background-color: $bg-color;
