@@ -232,6 +232,44 @@ computed: {
 }
 ```
 
+### 3. 平台特定规范 (uni-app / 微信小程序)
+
+#### ⚠️ Template 语法限制
+微信小程序对模板中的 JavaScript 表达式支持有限。**严禁在 template 中编写复杂逻辑**。
+
+**❌ 错误示例**：
+```vue
+<!-- 不支持对象字面量参数 -->
+<text>{{ $t('home.greeting', { name: userInfo.nickname || 'Guest' }) }}</text>
+
+<!-- 不支持复杂运算 -->
+<view :class="index % 2 === 0 ? 'even' : 'odd'"></view>
+```
+
+**✅ 正确示例**：
+```vue
+<!-- 使用 computed 属性 -->
+<text>{{ greetingText }}</text>
+
+<!-- Script -->
+computed: {
+  greetingText() {
+    const name = this.userInfo.nickname || 'Guest';
+    return this.$t('home.greeting', { name });
+  }
+}
+```
+
+#### ⚠️ 样式限制
+- **禁止使用 `*` 选择器**：小程序不支持。
+- **避免使用标签选择器**：如 `view {}`, `text {}`，应使用 class 选择器。
+- **Scoped 样式**：组件默认启用 Scoped，修改子组件样式需用 `::v-deep`。
+
+#### ⚠️ 响应式陷阱 (Vue 3 + Pinia)
+- 修改 Store 中的对象/数组时，务必**替换引用**以确保视图更新。
+- **❌ 错误**: `this.userInfo.name = 'New Name'`
+- **✅ 正确**: `this.userInfo = { ...this.userInfo, name: 'New Name' }`
+
 ## 主题系统开发指南
 
 > **重要**：项目采用混合主题方案。

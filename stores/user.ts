@@ -127,13 +127,17 @@ export const useUserStore = defineStore('user', {
       try {
         const profile = await getUserProfile();
         if (profile) {
+          const updates: any = {};
           if (profile.nickname) {
-            this.userInfo.nickname = profile.nickname;
+            updates.nickname = profile.nickname;
           }
           if (profile.avatarBase64) {
-            this.userInfo.avatar = profile.avatarBase64;
+            updates.avatar = profile.avatarBase64;
           }
-          uni.setStorageSync("userInfo", JSON.stringify(this.userInfo));
+          // Use updateUserInfo to ensure reactivity and persistence
+          if (Object.keys(updates).length > 0) {
+            this.updateUserInfo(updates);
+          }
         }
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
@@ -143,13 +147,17 @@ export const useUserStore = defineStore('user', {
       try {
         await saveUserProfile(profile);
         // Update local state
+        const updates: any = {};
         if (profile.nickname) {
-          this.userInfo.nickname = profile.nickname;
+          updates.nickname = profile.nickname;
         }
         if (profile.avatarBase64) {
-          this.userInfo.avatar = profile.avatarBase64;
+          updates.avatar = profile.avatarBase64;
         }
-        uni.setStorageSync("userInfo", JSON.stringify(this.userInfo));
+        // Use updateUserInfo to ensure reactivity and persistence
+        if (Object.keys(updates).length > 0) {
+          this.updateUserInfo(updates);
+        }
       } catch (error) {
         console.error("Failed to sync user profile:", error);
         throw error;

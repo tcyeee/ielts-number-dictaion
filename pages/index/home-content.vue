@@ -7,7 +7,7 @@
         <image class="avatar" src="/static/logo.png" mode="aspectFill"></image>
         <view class="user-text">
           <text class="app-name">{{ $t('app.name') }}</text>
-          <text class="greeting">{{ $t('home.greeting', { name: userInfo.nickname || 'Alex' }) }}</text>
+          <text class="greeting">{{ greetingText }}</text>
         </view>
       </view>
     </view>
@@ -74,6 +74,13 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ["settings", "userInfo"]),
+    greetingText() {
+      const name =
+        this.userInfo && this.userInfo.nickname
+          ? this.userInfo.nickname
+          : "Alex";
+      return this.$t("home.greeting", { name });
+    },
   },
   methods: {
     toSettings() {

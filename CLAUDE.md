@@ -301,7 +301,17 @@ export default {
 
 ## 注意事项
 
-### 1. 主题相关
+### 1. 微信小程序平台限制 (uni-app)
+- ⚠️ **模板语法限制**：Template 中不能使用复杂的 JS 表达式（如对象字面量参数 `{{ $t('key', { name: 'val' }) }}`）。必须将逻辑移至 `computed` 属性。
+- ⚠️ **CSS 限制**：
+  - 不支持 `*` 通配符选择器。
+  - `rgba()` 中不能使用 CSS 变量（需用 opacity 或拆分变量）。
+  - 本地背景图需转 base64 或使用网络图片（`<image>` 标签支持本地路径）。
+- ⚠️ **API 差异**：
+  - 使用 `uni.xxx` 替代 `wx.xxx` 以保持跨平台兼容性（虽本项目仅发布微信）。
+  - `uni.getStorageSync` 是同步方法，注意异常处理。
+
+### 2. 主题相关
 - ⚠️ **禁止**在页面中使用 `page { background-color: xxx; }` 全局设置，会覆盖主题
 - ⚠️ **禁止**添加 `:data-theme` 绑定或 `isDarkMode` 状态，主题由系统控制
 - ⚠️ 确保根元素有 `background-color: var(--bg-color)` 和 `min-height: 100vh`
