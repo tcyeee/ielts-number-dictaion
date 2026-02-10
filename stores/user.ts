@@ -13,17 +13,20 @@ export const useUserStore = defineStore('user', {
     const savedLang = uni.getStorageSync("language") || "zh-Hans";
     const token = uni.getStorageSync("token") || "";
     const openid = uni.getStorageSync("openid") || "";
+    const savedUserInfo = uni.getStorageSync("userInfo");
+
+    const defaultUserInfo = {
+      nickname: "Alex",
+      level: 12,
+      streak: 5,
+      avatar: "https://api.dicebear.com/9.x/avataaars/png?seed=Alex&backgroundColor=ffdfbf",
+    };
 
     return {
       token,
       openid,
       loading: false,
-      userInfo: {
-        name: "Alex",
-        level: 12,
-        streak: 5,
-        avatar: "https://api.dicebear.com/9.x/avataaars/png?seed=Alex&backgroundColor=ffdfbf",
-      },
+      userInfo: savedUserInfo ? JSON.parse(savedUserInfo) : defaultUserInfo,
       settings: {
         themeMode: savedTheme,
         currentLanguage: savedLang,
@@ -66,6 +69,7 @@ export const useUserStore = defineStore('user', {
     },
     updateUserInfo(info: Partial<typeof this.userInfo>) {
       this.userInfo = { ...this.userInfo, ...info };
+      uni.setStorageSync("userInfo", JSON.stringify(this.userInfo));
     },
     async syncSettings() {
       try {
@@ -124,11 +128,12 @@ export const useUserStore = defineStore('user', {
         const profile = await getUserProfile();
         if (profile) {
           if (profile.nickname) {
-            this.userInfo.name = profile.nickname;
+            this.userInfo.nickname = profile.nickname;
           }
           if (profile.avatarBase64) {
             this.userInfo.avatar = profile.avatarBase64;
           }
+          uni.setStorageSync("userInfo", JSON.stringify(this.userInfo));
         }
       } catch (error) {
         console.error("Failed to fetch user profile:", error);
@@ -139,11 +144,12 @@ export const useUserStore = defineStore('user', {
         await saveUserProfile(profile);
         // Update local state
         if (profile.nickname) {
-          this.userInfo.name = profile.nickname;
+          this.userInfo.nickname = profile.nickname;
         }
         if (profile.avatarBase64) {
           this.userInfo.avatar = profile.avatarBase64;
         }
+        uni.setStorageSync("userInfo", JSON.stringify(this.userInfo));
       } catch (error) {
         console.error("Failed to sync user profile:", error);
         throw error;

@@ -7,7 +7,7 @@
         <image class="avatar" src="/static/logo.png" mode="aspectFill"></image>
         <view class="user-text">
           <text class="app-name">{{ $t('app.name') }}</text>
-          <text class="greeting">{{ $t('home.greeting', { name: userInfo.name || 'Alex' }) }}</text>
+          <text class="greeting">{{ $t('home.greeting', { name: userInfo.nickname || 'Alex' }) }}</text>
         </view>
       </view>
     </view>

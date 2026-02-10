@@ -12,7 +12,7 @@
             <view class="icon--feather--edit" style="width: 28rpx; height: 28rpx; color: white;"></view>
           </view>
         </view>
-        <text class="user-name">{{ userInfo.name }}</text>
+        <text class="user-name">{{ userInfo.nickname }}</text>
         <view class="edit-profile-btn" @click="onEditProfileClick">
           <text class="btn-text">{{ $t('profile.editProfile') }}</text>
         </view>
@@ -109,14 +109,13 @@ export default {
   },
 
   mounted() {
-    this.fetchUserProfile();
+    // 移除这里的重复调用，App.vue 已经负责了全局初始化
   },
 
   methods: {
     ...mapActions(useUserStore, {
       updateLanguage: "setLanguage",
       updateTheme: "setThemeMode",
-      fetchUserProfile: "fetchUserProfile",
     }),
     setLanguage(lang) {
       this.updateLanguage(lang);

@@ -6,10 +6,11 @@ export default {
   onLaunch: function () {
     console.log("App Launch");
 
-    // 登录成功后获取用户配置
+    // 登录成功后获取用户配置和个人信息
     loginAndAuth().then(() => {
       const userStore = useUserStore();
       userStore.fetchUserSettings();
+      userStore.fetchUserProfile();
     });
 
     // 监听系统主题变化
