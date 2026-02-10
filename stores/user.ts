@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getUserSettings } from '@/service/api';
+import { getUserSettings, saveUserSettings } from '@/service/api';
 import type { UserSettings, ThemeMode, NotificationSettings, QuestionCategory } from '@/typing/UserSettings';
 
 declare const uni: any;
@@ -64,6 +64,13 @@ export const useUserStore = defineStore('user', {
     updateUserInfo(info: Partial<typeof this.userInfo>) {
       this.userInfo = { ...this.userInfo, ...info };
     },
+    async syncSettings() {
+      try {
+        await saveUserSettings(this.settings);
+      } catch (error) {
+        console.error("Failed to sync settings:", error);
+      }
+    },
     setThemeMode(mode: ThemeMode) {
       this.settings.themeMode = mode;
       // 持久化存储主题设置
@@ -71,21 +78,27 @@ export const useUserStore = defineStore('user', {
 
       // 触发主题更新（通过自定义事件通知 App.vue）
       uni.$emit('themeChange', mode);
+      this.syncSettings();
     },
     setLanguage(lang: string) {
       this.settings.currentLanguage = lang;
+      this.syncSettings();
     },
     setQuestionsPerSession(count: number) {
       this.settings.questionsPerSession = count;
+      this.syncSettings();
     },
     setDailyGoal(count: number) {
       this.settings.dailyGoal = count;
+      this.syncSettings();
     },
     updateNotificationSettings(settings: Partial<NotificationSettings>) {
       this.settings.notification = { ...this.settings.notification, ...settings };
+      this.syncSettings();
     },
     updateQuestionTypes(types: QuestionCategory[]) {
       this.settings.questionTypes = types;
+      this.syncSettings();
     },
     resetQuestionTypes() {
       this.settings.questionTypes = [
@@ -98,6 +111,7 @@ export const useUserStore = defineStore('user', {
         "Quantity",
         "Percentage"
       ] as QuestionCategory[];
+      this.syncSettings();
     },
     async fetchUserSettings() {
       try {
