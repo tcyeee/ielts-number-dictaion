@@ -7,7 +7,7 @@ export interface NotificationSettings {
   practiceTime: string;
 }
 
-export type QuestionCategory = 
+export type QuestionCategory =
   | "Date"
   | "Time"
   | "Phone"
@@ -18,6 +18,7 @@ export type QuestionCategory =
   | "Percentage";
 
 export interface UserSettings {
+  id?: string;   // 只有保存以后,才会拿到数据库ID
   themeMode: ThemeMode;
   currentLanguage: string;
   questionsPerSession: number;

@@ -5,6 +5,8 @@ export default {
   onLaunch: function () {
     console.log("App Launch");
     loginAndAuth();
+    // TODO 获取用户配置信息
+
     // 监听系统主题变化
     uni.onThemeChange((res) => {
       uni.$emit("systemThemeChange", res);
