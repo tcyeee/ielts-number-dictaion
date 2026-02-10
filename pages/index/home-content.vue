@@ -59,7 +59,6 @@ import { navigateTo } from "@/utils/router";
 import { mapState } from "pinia";
 import { useUserStore } from "@/stores/user";
 import themeMixin from "@/mixins/themeMixin.js";
-import i18n from "@/locale/index";
 
 export default {
   mixins: [themeMixin],
@@ -80,10 +79,12 @@ export default {
         this.userInfo && this.userInfo.nickname
           ? this.userInfo.nickname
           : "Alex";
-      return i18n.global.t("home.greeting", { name });
+      // Manual fallback for runtime-only build
+      return this.$t("home.greeting", { name }).replace("{name}", name);
     },
     adaptiveMixText() {
-      return i18n.global.t("home.adaptiveMix", { count: 10 });
+      const count = 10;
+      return this.$t("home.adaptiveMix", { count }).replace("{count}", count);
     },
   },
   methods: {

@@ -89,6 +89,11 @@ ielts-number-dictaion/
 - **Script**: `this.$t('common.save')`
 - **Keys**: 使用嵌套结构，如 `page.section.key` (e.g., `profile.dailyGoal`)。
 
+### 平台限制与解决方案
+
+**CSP 限制**: 微信小程序环境禁止 `new Function`/`eval`，导致 `vue-i18n` 运行时插值失效（显示 `{name}`）。
+**解决方案**: 代码中需手动处理插值兜底：`this.$t('key', { name }).replace('{name}', name)`。
+
 ## 主题系统实现
 
 ### 技术方案

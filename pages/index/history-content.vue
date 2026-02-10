@@ -61,7 +61,6 @@ import WeeklyPerformanceChart from "@/components/chart/weekly-performance-chart.
 import { mapState } from "pinia";
 import { useUserStore } from "@/stores/user";
 import { QUESTION_CATEGORIES } from "@/utils/constants.js";
-import i18n from "@/locale/index";
 
 export default {
   components: {
@@ -83,7 +82,8 @@ export default {
   },
   methods: {
     totalText(count) {
-      return i18n.global.t("history.total", { count });
+      // Manual fallback for runtime-only build
+      return this.$t("history.total", { count }).replace("{count}", count);
     },
     getScoreClass(percent) {
       if (percent >= 90) return "success";

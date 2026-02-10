@@ -270,6 +270,21 @@ computed: {
 - **❌ 错误**: `this.userInfo.name = 'New Name'`
 - **✅ 正确**: `this.userInfo = { ...this.userInfo, name: 'New Name' }`
 
+#### ⚠️ CSP 限制 (Runtime Compilation)
+微信小程序环境禁止使用 `new Function` 和 `eval`，导致 `vue-i18n` 的运行时编译器（Runtime Compiler）无法工作。这会导致带参数的翻译（如 `Hello {name}`）无法正确插值，直接显示 `{name}`。
+
+**解决方案**：手动进行字符串替换作为兜底。
+
+```javascript
+computed: {
+  greetingText() {
+    const name = this.userInfo.nickname;
+    // 先尝试翻译，如果编译器失效导致未替换，则手动 replace
+    return this.$t('home.greeting', { name }).replace('{name}', name);
+  }
+}
+```
+
 ## 主题系统开发指南
 
 > **重要**：项目采用混合主题方案。
