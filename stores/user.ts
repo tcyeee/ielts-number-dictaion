@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { getUserSettings, saveUserSettings, getUserProfile, saveUserProfile } from '@/service/api';
 import type { UserSettings, ThemeMode, NotificationSettings, QuestionCategory } from '@/typing/UserSettings';
 import type { UserProfile } from '@/typing/UserProfile';
+import i18n from '@/locale/index';
 
 declare const uni: any;
 
@@ -9,6 +10,7 @@ export const useUserStore = defineStore('user', {
   state: () => {
     // 从本地存储读取主题设置，默认为 auto（跟随系统）
     const savedTheme = (uni.getStorageSync("themeMode") || "auto") as ThemeMode;
+    const savedLang = uni.getStorageSync("language") || "zh-Hans";
     const token = uni.getStorageSync("token") || "";
     const openid = uni.getStorageSync("openid") || "";
 
@@ -24,7 +26,7 @@ export const useUserStore = defineStore('user', {
       },
       settings: {
         themeMode: savedTheme,
-        currentLanguage: "EN",
+        currentLanguage: savedLang,
         questionsPerSession: 10,
         dailyGoal: 10,
         notification: {
@@ -83,6 +85,9 @@ export const useUserStore = defineStore('user', {
     },
     setLanguage(lang: string) {
       this.settings.currentLanguage = lang;
+      uni.setStorageSync("language", lang);
+      // @ts-ignore
+      i18n.global.locale = lang;
       this.syncSettings();
     },
     setQuestionsPerSession(count: number) {

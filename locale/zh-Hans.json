@@ -1,0 +1,28 @@
+{
+  "app": {
+    "name": "雅思数字听写"
+  },
+  "tabbar": {
+    "home": "首页",
+    "history": "历史",
+    "profile": "我的"
+  },
+  "common": {
+    "confirm": "确认",
+    "cancel": "取消",
+    "save": "保存",
+    "loading": "加载中..."
+  },
+  "profile": {
+    "editProfile": "编辑资料",
+    "notifications": "通知设置",
+    "dailyGoal": "每日目标",
+    "questionPreferences": "题型偏好",
+    "questionsPerSession": "每组题数",
+    "appLanguage": "语言",
+    "theme": "主题",
+    "privacyPolicy": "隐私政策",
+    "termsOfService": "服务条款",
+    "contactUs": "联系我们"
+  }
+}

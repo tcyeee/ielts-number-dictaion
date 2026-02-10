@@ -1,8 +1,8 @@
 import { useUserStore } from '@/stores/user'
 
 declare const uni: any
-// const BASE_URL = "https://tcyeee.top/api"
-const BASE_URL = "http://127.0.0.1:3000"
+const BASE_URL = "https://tcyeee.top/api"
+// const BASE_URL = "http://127.0.0.1:3000"
 
 function getAuthHeader(): Record<string, string> {
   const userStore = useUserStore()

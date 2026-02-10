@@ -14,33 +14,33 @@
         </view>
         <text class="user-name">{{ userInfo.name }}</text>
         <view class="edit-profile-btn" @click="onEditProfileClick">
-          <text class="btn-text">Edit Profile</text>
+          <text class="btn-text">{{ $t('profile.editProfile') }}</text>
         </view>
       </view>
 
       <!-- Settings Group 1 -->
       <view class="menu-group">
         <!-- Notification Settings -->
-        <profile-menu-item title="Notifications" icon="icon--feather--bell" icon-color="#9d65ff" icon-bg-class="purple" @click="onNotificationClick" />
+        <profile-menu-item :title="$t('profile.notifications')" icon="icon--feather--bell" icon-color="#9d65ff" icon-bg-class="purple" @click="onNotificationClick" />
         <!-- Daily Practice Goal -->
-        <profile-menu-item title="Daily Practice Goal" icon="icon--feather--target" icon-color="#ff5252" icon-bg-class="red" :value="dailyGoal" @click="onDailyGoalClick" />
+        <profile-menu-item :title="$t('profile.dailyGoal')" icon="icon--feather--target" icon-color="#ff5252" icon-bg-class="red" :value="dailyGoal" @click="onDailyGoalClick" />
         <!-- Question Preferences -->
-        <profile-menu-item title="Question Preferences" icon="icon--feather--sliders" icon-color="#00BFA5" icon-bg-class="teal" @click="onQuestionPreferencesClick" />
+        <profile-menu-item :title="$t('profile.questionPreferences')" icon="icon--feather--sliders" icon-color="#00BFA5" icon-bg-class="teal" @click="onQuestionPreferencesClick" />
         <!-- Questions Per Session -->
-        <profile-menu-item title="Questions Per Session" icon="icon--feather--list" icon-color="#2b86ff" icon-bg-class="blue" :value="questionsPerSession" @click="onQuestionsPerSessionClick" />
+        <profile-menu-item :title="$t('profile.questionsPerSession')" icon="icon--feather--list" icon-color="#2b86ff" icon-bg-class="blue" :value="questionsPerSession" @click="onQuestionsPerSessionClick" />
       </view>
 
       <!-- Settings Group 2 -->
       <view class="menu-group">
         <!-- App Language -->
-        <profile-menu-item title="App Language" icon="icon--feather--globe" icon-color="#00d26a" icon-bg-class="green" :show-arrow="false">
+        <profile-menu-item :title="$t('profile.appLanguage')" icon="icon--feather--globe" icon-color="#00d26a" icon-bg-class="green" :show-arrow="false">
           <template #right>
             <segment-control :model-value="currentLanguage" :options="languageOptions" @update:model-value="setLanguage" />
           </template>
         </profile-menu-item>
 
         <!-- Theme -->
-        <profile-menu-item title="Theme" icon="icon--feather--sun" icon-color="#ffb300" icon-bg-class="yellow" :show-arrow="false">
+        <profile-menu-item :title="$t('profile.theme')" icon="icon--feather--sun" icon-color="#ffb300" icon-bg-class="yellow" :show-arrow="false">
           <template #right>
             <segment-control :model-value="currentThemeMode" :options="themeOptions" @update:model-value="setTheme" />
           </template>
@@ -50,11 +50,11 @@
       <!-- Support Group -->
       <view class="menu-group">
         <!-- Privacy Policy -->
-        <profile-menu-item title="Privacy Policy" icon="icon--feather--shield" icon-color="#ff6b35" icon-bg-class="orange" @click="onPrivacyClick" />
+        <profile-menu-item :title="$t('profile.privacyPolicy')" icon="icon--feather--shield" icon-color="#ff6b35" icon-bg-class="orange" @click="onPrivacyClick" />
         <!-- Terms of Service -->
-        <profile-menu-item title="Terms of Service" icon="icon--feather--file-text" icon-color="#00BFA5" icon-bg-class="teal" @click="onTermsClick" />
+        <profile-menu-item :title="$t('profile.termsOfService')" icon="icon--feather--file-text" icon-color="#00BFA5" icon-bg-class="teal" @click="onTermsClick" />
         <!-- Contact Us -->
-        <profile-menu-item title="Contact Us" icon="icon--feather--message-square" icon-color="#2b86ff" icon-bg-class="blue" open-type="contact" />
+        <profile-menu-item :title="$t('profile.contactUs')" icon="icon--feather--message-square" icon-color="#2b86ff" icon-bg-class="blue" open-type="contact" />
       </view>
 
     </view>
@@ -81,8 +81,8 @@ export default {
   data() {
     return {
       languageOptions: [
-        { label: "EN", value: "EN" },
-        { label: "CN", value: "CN" },
+        { label: "EN", value: "en" },
+        { label: "中", value: "zh-Hans" },
       ],
       themeOptions: [
         { label: "AUTO", value: "auto" },

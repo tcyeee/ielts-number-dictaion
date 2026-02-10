@@ -18,9 +18,12 @@ app.$mount()
 // #ifdef VUE3
 import { createSSRApp } from 'vue'
 import * as Pinia from 'pinia'
+import i18n from './locale/index'
+
 export function createApp() {
   const app = createSSRApp(App)
   app.use(Pinia.createPinia())
+  app.use(i18n)
   app.mixin(share)
   app.mixin(themeMixin)
   return {
