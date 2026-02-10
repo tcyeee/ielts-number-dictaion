@@ -125,7 +125,8 @@ export const useUserStore = defineStore('user', {
     },
     async fetchUserProfile() {
       try {
-        const profile = await getUserProfile();
+        const profile = (await getUserProfile()).profile;
+        console.log(profile);
         if (profile) {
           const updates: any = {};
           if (profile.nickname) {
@@ -165,7 +166,8 @@ export const useUserStore = defineStore('user', {
     },
     async fetchUserSettings() {
       try {
-        const settings = await getUserSettings();
+        const settings = (await getUserSettings()).settings;
+        console.log(settings);
         if (settings) {
           // 这里的合并逻辑确保了如果后端返回空，或者部分字段，我们依然保留默认值
           // 深度合并 notification 对象
