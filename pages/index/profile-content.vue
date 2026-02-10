@@ -200,9 +200,9 @@ export default {
 
 .edit-profile-btn {
   padding: 12rpx 40rpx;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
   border-radius: 100rpx;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: var(--hover-bg);
 
   .btn-text {
     font-size: 28rpx;
