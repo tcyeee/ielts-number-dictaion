@@ -73,7 +73,9 @@ export const useUserStore = defineStore('user', {
     },
     async syncSettings() {
       try {
-        await saveUserSettings(this.settings);
+        // 排除仅本地管理的设置 (themeMode, currentLanguage)
+        const { themeMode, currentLanguage, ...settingsToSync } = this.settings;
+        await saveUserSettings(settingsToSync as UserSettings);
       } catch (error) {
         console.error("Failed to sync settings:", error);
       }
@@ -85,14 +87,16 @@ export const useUserStore = defineStore('user', {
 
       // 触发主题更新（通过自定义事件通知 App.vue）
       uni.$emit('themeChange', mode);
-      this.syncSettings();
+      // 主题设置仅本地管理，不同步到后台
+      // this.syncSettings();
     },
     setLanguage(lang: string) {
       this.settings.currentLanguage = lang;
       uni.setStorageSync("language", lang);
       // @ts-ignore
       i18n.global.locale = lang;
-      this.syncSettings();
+      // 语言设置仅本地管理，不同步到后台
+      // this.syncSettings();
     },
     setQuestionsPerSession(count: number) {
       this.settings.questionsPerSession = count;
@@ -170,33 +174,33 @@ export const useUserStore = defineStore('user', {
         console.log(settings);
         if (settings) {
           // 这里的合并逻辑确保了如果后端返回空，或者部分字段，我们依然保留默认值
-          // 深度合并 notification 对象
-          if (settings.notification) {
-            this.settings.notification = { ...this.settings.notification, ...settings.notification };
-          }
-
-          // 合并其他顶层属性
-          this.settings = { ...this.settings, ...settings };
-
-          // 确保 notification 是合并后的结果 (because the line above overwrites it if settings.notification exists)
-          // Actually, { ...this.settings, ...settings } will overwrite this.settings.notification with settings.notification
-          // So if settings.notification is partial, we lose the defaults for missing keys in notification?
-          // Let's refine the merge strategy.
-
-          // Better approach:
-          // 1. Merge top level
-          // 2. If notification exists in fetched settings, merge it carefully
-
-          // Re-thinking:
           const newSettings = { ...this.settings, ...settings };
+          
+          // 保持本地的主题和语言设置不被覆盖
+          newSettings.themeMode = this.settings.themeMode;
+          newSettings.currentLanguage = this.settings.currentLanguage;
+          
+          // 深度合并 notification 对象
           if (settings.notification) {
             newSettings.notification = { ...this.settings.notification, ...settings.notification };
           }
+          
           this.settings = newSettings;
 
           // 如果有主题设置，需要触发副作用（本地存储+通知）
-          if (settings.themeMode) {
-            this.setThemeMode(settings.themeMode);
+          // 由于主题现在只在本地管理，且上面已经强制保留了本地设置，这里的逻辑其实是多余的，
+          // 但为了防止逻辑错误（比如本地被意外清空），保留副作用触发也是安全的，只要值是正确的。
+          // 既然我们已经确保 newSettings.themeMode 是本地的值，那么这里再次触发可能是不必要的，
+          // 除非我们想确保系统状态一致。
+          // 但考虑到 fetchUserSettings 主要用于从云端拉取，如果云端不存，那就不应该用云端的值去触发变化。
+          // 实际上，因为我们上面强制覆盖了 newSettings.themeMode = this.settings.themeMode，
+          // 所以这里 themeMode 没变，触发也没关系，或者干脆去掉这段逻辑。
+          // 不过，如果这是首次加载，this.settings.themeMode 来自 localStorage，
+          // 触发一下副作用（如通知 App.vue）可能是个好主意，确保 UI 状态正确。
+          if (newSettings.themeMode) {
+            // 只更新本地存储和触发事件，不调用 setThemeMode 以避免重复保存 (syncSettings)
+            uni.setStorageSync("themeMode", newSettings.themeMode);
+            uni.$emit('themeChange', newSettings.themeMode);
           }
         }
       } catch (error) {
