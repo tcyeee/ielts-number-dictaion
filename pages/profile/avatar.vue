@@ -2,79 +2,157 @@
   <view class="container" :data-theme="pageThemeAttr">
     <custom-header title="Edit Profile" />
     <view class="content">
-      <view class="avatar-wrapper" @click="changeAvatar">
-        <view class="avatar-container">
-          <image :src="avatarUrl" class="avatar-image" mode="aspectFill" />
-          <view class="avatar-overlay">
-            <view class="camera-icon">
-              <!-- Simple camera icon representation using CSS or text if no icon available -->
-              <view class="camera-body">
-                <view class="camera-lens"></view>
+      <view class="avatar-wrapper">
+        <button class="avatar-btn" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+          <view class="avatar-container">
+            <image :src="avatarUrl" class="avatar-image" mode="aspectFill" />
+            <view class="avatar-overlay">
+              <view class="camera-icon">
+                <view class="camera-body">
+                  <view class="camera-lens"></view>
+                </view>
               </view>
+              <text class="change-text">CHANGE PHOTO</text>
             </view>
-            <text class="change-text">CHANGE PHOTO</text>
           </view>
-        </view>
+        </button>
       </view>
 
       <view class="form-group">
         <text class="label">NICKNAME</text>
         <view class="input-container">
-          <input class="input" v-model="nickname" placeholder="Enter nickname" placeholder-class="input-placeholder" />
+          <input class="input" type="nickname" v-model="nickname" @blur="onNicknameBlur" placeholder="Enter nickname" placeholder-class="input-placeholder" />
         </view>
       </view>
 
       <view class="footer">
-        <button class="save-btn" @click="saveChanges">Save Changes</button>
+        <button class="save-btn" @click="saveChanges" :loading="loading">Save Changes</button>
       </view>
     </view>
   </view>
 </template>
 
-<script>
+<script lang="ts">
 import CustomHeader from "@/components/nav/custom-header.vue";
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useUserStore } from "@/stores/user";
+import { defineComponent } from "vue";
+import themeMixin from "@/mixins/themeMixin.js";
 
-export default {
+declare const uni: any;
+
+export default defineComponent({
+  mixins: [themeMixin],
   components: {
     CustomHeader,
   },
   data() {
     return {
-      // Default placeholder avatar or user's current avatar
-      avatarUrl: "https://via.placeholder.com/150",
-      nickname: "Alex",
+      avatarUrl: "",
+      nickname: "",
+      avatarChanged: false,
     };
   },
   computed: {
-    ...mapState(useUserStore, ["settings"]),
+    ...mapState(useUserStore, ["userInfo", "loading"]),
+  },
+  mounted() {
+    this.initData();
   },
   methods: {
-    changeAvatar() {
-      uni.chooseImage({
-        count: 1,
-        sizeType: ["compressed"],
-        sourceType: ["album", "camera"],
-        success: (res) => {
-          this.avatarUrl = res.tempFilePaths[0];
-        },
-      });
+    ...mapActions(useUserStore, ["syncUserProfile", "fetchUserProfile"]),
+
+    initData() {
+      // Initialize with store data
+      this.nickname = this.userInfo.name || "";
+      this.avatarUrl =
+        this.userInfo.avatar || "https://via.placeholder.com/150";
     },
-    saveChanges() {
-      // Mock save functionality
+
+    onChooseAvatar(e: any) {
+      const { avatarUrl } = e.detail;
+      this.avatarUrl = avatarUrl;
+      this.avatarChanged = true;
+    },
+
+    onNicknameBlur(e: any) {
+      // Ensure we capture the value from the event if v-model missed it (sometimes happens with type="nickname")
+      if (e.detail.value) {
+        this.nickname = e.detail.value;
+      }
+    },
+
+    async saveChanges() {
+      if (!this.nickname.trim()) {
+        uni.showToast({
+          title: "Nickname cannot be empty",
+          icon: "none",
+        });
+        return;
+      }
+
       uni.showLoading({ title: "Saving..." });
-      setTimeout(() => {
-        uni.hideLoading();
+
+      try {
+        let avatarBase64 = undefined;
+
+        if (this.avatarChanged) {
+          // Convert local image to Base64
+          avatarBase64 = await this.imageToBase64(this.avatarUrl);
+        }
+
+        await this.syncUserProfile({
+          nickname: this.nickname,
+          ...(avatarBase64 ? { avatarBase64 } : {}),
+        });
+
         uni.showToast({
           title: "Saved successfully",
           icon: "success",
         });
-        // Here you would typically emit an event or update global state
-      }, 1500);
+
+        setTimeout(() => {
+          uni.navigateBack();
+        }, 1500);
+      } catch (error) {
+        uni.showToast({
+          title: "Failed to save",
+          icon: "none",
+        });
+        console.error(error);
+      } finally {
+        uni.hideLoading();
+      }
+    },
+
+    imageToBase64(path: string): Promise<string> {
+      return new Promise((resolve, reject) => {
+        // If it's already a base64 string or http url that we don't want to convert (though avatarChanged should prevent this)
+        if (path.startsWith("data:") || path.startsWith("http")) {
+          // If it is http, we might need to download it first if we really wanted to re-upload,
+          // but here we only call this if avatarChanged is true, which implies it's a temp file path from chooseAvatar
+          if (path.startsWith("http")) {
+            // In case logic slips, just return null or handle download.
+            // For now assume temp path.
+          }
+        }
+
+        uni.getFileSystemManager().readFile({
+          filePath: path,
+          encoding: "base64",
+          success: (res: any) => {
+            // Append data URI scheme
+            const base64 = "data:image/jpeg;base64," + res.data;
+            resolve(base64);
+          },
+          fail: (err: any) => {
+            reject(err);
+          },
+        });
+      });
     },
   },
-};
+});
 </script>
 
 <style lang="scss">
@@ -98,6 +176,18 @@ export default {
   display: flex;
   justify-content: center;
   margin-bottom: 40px;
+}
+
+.avatar-btn {
+  background: none;
+  padding: 0;
+  margin: 0;
+  border: none;
+  line-height: normal;
+  border-radius: 50%;
+  &::after {
+    border: none;
+  }
 }
 
 .avatar-container {
@@ -194,10 +284,11 @@ export default {
   color: var(--text-main);
   font-size: 16px;
   width: 100%;
+  height: 24px; // Ensure enough height
 }
 
 .input-placeholder {
-  color: $uni-text-color-grey;
+  color: #999;
 }
 
 .footer {

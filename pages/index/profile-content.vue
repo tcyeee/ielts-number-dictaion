@@ -108,10 +108,15 @@ export default {
     },
   },
 
+  mounted() {
+    this.fetchUserProfile();
+  },
+
   methods: {
     ...mapActions(useUserStore, {
       updateLanguage: "setLanguage",
       updateTheme: "setThemeMode",
+      fetchUserProfile: "fetchUserProfile",
     }),
     setLanguage(lang) {
       this.updateLanguage(lang);

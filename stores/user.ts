@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-import { getUserSettings, saveUserSettings } from '@/service/api';
+import { getUserSettings, saveUserSettings, getUserProfile, saveUserProfile } from '@/service/api';
 import type { UserSettings, ThemeMode, NotificationSettings, QuestionCategory } from '@/typing/UserSettings';
+import type { UserProfile } from '@/typing/UserProfile';
 
 declare const uni: any;
 
@@ -112,6 +113,36 @@ export const useUserStore = defineStore('user', {
         "Percentage"
       ] as QuestionCategory[];
       this.syncSettings();
+    },
+    async fetchUserProfile() {
+      try {
+        const profile = await getUserProfile();
+        if (profile) {
+          if (profile.nickname) {
+            this.userInfo.name = profile.nickname;
+          }
+          if (profile.avatarBase64) {
+            this.userInfo.avatar = profile.avatarBase64;
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      }
+    },
+    async syncUserProfile(profile: UserProfile) {
+      try {
+        await saveUserProfile(profile);
+        // Update local state
+        if (profile.nickname) {
+          this.userInfo.name = profile.nickname;
+        }
+        if (profile.avatarBase64) {
+          this.userInfo.avatar = profile.avatarBase64;
+        }
+      } catch (error) {
+        console.error("Failed to sync user profile:", error);
+        throw error;
+      }
     },
     async fetchUserSettings() {
       try {
