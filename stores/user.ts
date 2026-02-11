@@ -130,7 +130,6 @@ export const useUserStore = defineStore('user', {
     async fetchUserProfile() {
       try {
         const profile = (await getUserProfile()).profile;
-        console.log(profile);
         if (profile) {
           const updates: any = {};
           if (profile.nickname) {
@@ -171,20 +170,19 @@ export const useUserStore = defineStore('user', {
     async fetchUserSettings() {
       try {
         const settings = (await getUserSettings()).settings;
-        console.log(settings);
         if (settings) {
           // 这里的合并逻辑确保了如果后端返回空，或者部分字段，我们依然保留默认值
           const newSettings = { ...this.settings, ...settings };
-          
+
           // 保持本地的主题和语言设置不被覆盖
           newSettings.themeMode = this.settings.themeMode;
           newSettings.currentLanguage = this.settings.currentLanguage;
-          
+
           // 深度合并 notification 对象
           if (settings.notification) {
             newSettings.notification = { ...this.settings.notification, ...settings.notification };
           }
-          
+
           this.settings = newSettings;
 
           // 如果有主题设置，需要触发副作用（本地存储+通知）
