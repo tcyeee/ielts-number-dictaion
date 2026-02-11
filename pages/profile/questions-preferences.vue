@@ -42,7 +42,7 @@ import CustomHeader from "@/components/nav/custom-header.vue";
 import { mapState, mapActions } from "pinia";
 import { useUserStore } from "@/stores/user";
 import themeMixin from "@/mixins/themeMixin.js";
-import { QUESTION_CATEGORIES } from "@/utils/constants.js";
+import { QUESTION_CATEGORIES } from "@/utils/question-utils.ts";
 
 export default {
   name: "QuestionsPreferences",

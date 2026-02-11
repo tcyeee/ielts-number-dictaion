@@ -60,7 +60,7 @@ import SafeArea from "@/components/safe-area/safe-area-top.vue";
 import WeeklyPerformanceChart from "@/components/chart/weekly-performance-chart.vue";
 import { mapState } from "pinia";
 import { useUserStore } from "@/stores/user";
-import { QUESTION_CATEGORIES } from "@/utils/constants.js";
+import { QUESTION_CATEGORIES } from "@/utils/question-utils.ts";
 
 export default {
   components: {
